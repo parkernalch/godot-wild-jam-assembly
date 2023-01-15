@@ -12,7 +12,7 @@ onready var right_cast: RayCast2D = $RightCast
 onready var coyote_timer: Timer = $CoyoteTimer
 onready var jump_buffer_timer: Timer = $JumpBufferTimer
 
-export var size_per_unit = 16
+export var size_per_unit = 32
 
 export var platformer_data : Resource
 var data : PlatformerData
@@ -41,8 +41,9 @@ var wall_drag_strength = 0
 
 # Health
 var health = 100
-var maxHealth = 100
-var healthMaterial
+var max_health = 100
+var health_material
+var heat_amount = .3
 
 class Accel:
 	var acceleration: float
@@ -54,8 +55,8 @@ class Accel:
 func _ready():
 	assert(platformer_data is PlatformerData)
 	data = platformer_data
-	healthMaterial = $AnimatedSprite.get_material();
-	healthMaterial.set_shader_param("health",health/maxHealth);
+	health_material = $AnimatedSprite.get_material();
+	health_material.set_shader_param("health",health/max_health);
 	EventBus.connect("platformer_resource_updated", self, "_on_resource_updated")
 	coyote_timer.connect("timeout", self, "_on_coyote_time_expired")
 
@@ -157,8 +158,7 @@ func _physics_process(delta):
 	var is_on_left_wall = left_cast.is_colliding() and horizontal_input < 0
 	var is_on_right_wall = right_cast.is_colliding() and horizontal_input > 0
 	
-	healthMaterial.set_shader_param("health",health/maxHealth);
-	health -= 0.1;
+	health_material.set_shader_param("health",health/max_health);
 
 	if is_on_left_wall:
 		on_wall = "left"
@@ -203,6 +203,10 @@ func _physics_process(delta):
 		pass
 	
 	velocity.y = apply_vertical_forces(delta)
+	
+	
+	if is_grounded && velocity.x > 0:
+		health -= heat_amount;
 
 	velocity = move_and_slide_with_snap(
 		velocity, 

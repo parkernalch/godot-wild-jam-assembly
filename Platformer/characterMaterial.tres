@@ -1,0 +1,21 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+
+uniform float health = 1.0;
+
+void fragment() {
+	vec4 blueShade = vec4(0,.4,.6,1);
+	float tau = 6.283185307179586;
+	vec4 curr_color = texture(TEXTURE,UV);
+	
+	float healthCheck = UV.y > 1.0 - health ? 1.0 : 0.0;
+	vec4 healthMask = vec4(healthCheck,healthCheck,healthCheck,healthCheck);
+	COLOR = healthMask * curr_color * blueShade;
+}"
+
+[resource]
+render_priority = 1
+shader = SubResource( 3 )
+shader_param/health = 1.0

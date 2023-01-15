@@ -39,6 +39,11 @@ var jump_released = false
 var on_wall = null # "left" or "right"
 var wall_drag_strength = 0
 
+# Health
+var health = 100
+var maxHealth = 100
+var healthMaterial
+
 class Accel:
 	var acceleration: float
 	var deceleration: float
@@ -49,6 +54,8 @@ class Accel:
 func _ready():
 	assert(platformer_data is PlatformerData)
 	data = platformer_data
+	healthMaterial = $AnimatedSprite.get_material();
+	healthMaterial.set_shader_param("health",health/maxHealth);
 	EventBus.connect("platformer_resource_updated", self, "_on_resource_updated")
 	coyote_timer.connect("timeout", self, "_on_coyote_time_expired")
 
@@ -150,6 +157,9 @@ func _physics_process(delta):
 	var is_on_left_wall = left_cast.is_colliding() and horizontal_input < 0
 	var is_on_right_wall = right_cast.is_colliding() and horizontal_input > 0
 	
+	healthMaterial.set_shader_param("health",health/maxHealth);
+	health -= 0.1;
+
 	if is_on_left_wall:
 		on_wall = "left"
 	elif is_on_right_wall:

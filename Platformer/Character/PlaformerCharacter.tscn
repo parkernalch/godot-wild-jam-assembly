@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Resources/platformer_data.tres" type="Resource" id=1]
-[ext_resource path="res://Platformer/PlaformerCharacter.gd" type="Script" id=2]
+[ext_resource path="res://Platformer/Character/PlaformerCharacter.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/squash_stretch.gd" type="Script" id=3]
 [ext_resource path="res://Assets/16xSquare.png" type="Texture" id=4]
 [ext_resource path="res://Platformer/characterMaterial.tres" type="Material" id=5]
@@ -20,6 +20,9 @@ extents = Vector2( 8, 8 )
 [node name="PlaformerCharacter" type="KinematicBody2D"]
 scale = Vector2( 3, 3 )
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
 platformer_data = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -55,3 +58,6 @@ cast_to = Vector2( 10, 0 )
 [node name="WallDragDecayTimer" type="Timer" parent="."]
 
 [node name="WallJumpControlTimer" type="Timer" parent="."]
+
+[node name="trail_pos" type="Node2D" parent="."]
+position = Vector2( 0, 8 )

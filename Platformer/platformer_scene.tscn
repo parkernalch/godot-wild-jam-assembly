@@ -1,15 +1,16 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Platformer/PlaformerCharacter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Platformer/Character/PlaformerCharacter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Platformer/PlatformerEnvironment.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Platformer/PlatformerParamControls.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Platformer/platformer_scene.gd" type="Script" id=4]
+[ext_resource path="res://Platformer/Character/trail.tscn" type="PackedScene" id=5]
 
 [node name="PlatformerScene" type="Node2D"]
 script = ExtResource( 4 )
 
 [node name="PlaformerCharacter" parent="." instance=ExtResource( 1 )]
-position = Vector2( 839, 226 )
+position = Vector2( 765, 889 )
 
 [node name="PlatformerEnvironment" parent="." instance=ExtResource( 2 )]
 
@@ -17,5 +18,10 @@ position = Vector2( 839, 226 )
 visible = false
 
 [node name="PlatformerParamControls" parent="CanvasLayer" instance=ExtResource( 3 )]
+visible = false
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="trail" parent="." instance=ExtResource( 5 )]
+visible = false
+target_path = NodePath("../PlaformerCharacter")

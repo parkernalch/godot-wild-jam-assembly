@@ -11,6 +11,7 @@ script = ExtResource( 4 )
 
 [node name="PlaformerCharacter" parent="." instance=ExtResource( 1 )]
 position = Vector2( 765, 889 )
+scale = Vector2( 3.17627, 3.06872 )
 
 [node name="PlatformerEnvironment" parent="." instance=ExtResource( 2 )]
 
@@ -23,5 +24,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="trail" parent="." instance=ExtResource( 5 )]
-visible = false
 target_path = NodePath("../PlaformerCharacter")
+
+[connection signal="trail_end" from="PlaformerCharacter" to="trail" method="_stop_emitting"]
+[connection signal="trail_start" from="PlaformerCharacter" to="trail" method="_add_trail_point"]

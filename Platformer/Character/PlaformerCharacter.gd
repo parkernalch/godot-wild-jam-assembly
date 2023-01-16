@@ -4,6 +4,8 @@ signal movement_started(movement_direction)
 signal changing_direction(current_velocity, input_direction)
 signal jumped(is_grounded)
 signal landed(impact_velocity)
+signal trail_start(start_pos)
+signal trail_end()
 
 onready var cast: RayCast2D = $DownCast
 onready var cast2: RayCast2D = $DownCast2
@@ -204,9 +206,12 @@ func _physics_process(delta):
 	
 	velocity.y = apply_vertical_forces(delta)
 	
-	
-	if is_grounded && velocity.x > 0:
+
+	if is_grounded && abs(velocity.x) > 0:
+		emit_signal("trail_start", $trail_pos.global_position)
 		health -= heat_amount;
+	else:
+		emit_signal("trail_end")
 
 	velocity = move_and_slide_with_snap(
 		velocity, 

@@ -1,4 +1,5 @@
 extends KinematicBody2D
+class_name Player
 
 signal movement_started(movement_direction)
 signal changing_direction(current_velocity, input_direction)
@@ -36,6 +37,7 @@ var is_jumping = false
 var jump_force = 0
 var jump_pressed = false
 var jump_released = false
+var jumps_remaining = 0
 
 # wall
 var on_wall = null # "left" or "right"
@@ -45,7 +47,7 @@ var wall_drag_strength = 0
 var health = 100
 var max_health = 100
 var health_material
-var heat_amount = .3
+var heat_amount = .2
 
 class Accel:
 	var acceleration: float
@@ -69,9 +71,9 @@ func _ready():
 	$WallJumpControlTimer.one_shot = true
 	set_resource_derived_properties()
 
-# func _on_coyote_time_expired():
-# 	if is_jumping:
-# 		jumps_remaining -= 1
+func _on_coyote_time_expired():
+	if jumps_remaining > 0:
+		jumps_remaining -= 1
 
 func _on_resource_updated(resource):
 	print("got resource updated: " + str(resource))
@@ -178,6 +180,15 @@ func _physics_process(delta):
 		emit_signal("landed", cached_velocity)
 	if not was_airborne and not is_grounded:
 		coyote_timer.start(data.jump_coyote_timeout)
+	
+	if is_grounded:
+		is_jumping = false
+		jumps_remaining = data.jump_midair_count + 1
+		wall_drag_strength = data.wall_drag
+		velocity.x = apply_horizontal_forces(delta, grounded_forces)
+	else:
+		velocity.x = apply_horizontal_forces(delta, airborne_forces)
+		pass
 
 	if (jump_pressed or jump_buffer_timer.time_left > 0):
 		if on_wall != null and not is_grounded:
@@ -186,23 +197,15 @@ func _physics_process(delta):
 			if on_wall == "left":
 				velocity.x *= -1
 			$WallJumpControlTimer.start()
-		elif !is_jumping and is_grounded:
-			velocity.y = - jump_force
-			is_jumping = true
+		elif jumps_remaining > 0:
+			velocity.y = -jump_force
 		emit_signal("jumped", is_grounded)
 		jump_pressed = false
+		jumps_remaining -= 1
 		jump_buffer_timer.stop()
 	if data.jump_is_variable && jump_released && velocity.y < 0:
 		velocity.y *= 0.2
 		jump_released = false
-	
-	if is_grounded:
-		is_jumping = false
-		wall_drag_strength = data.wall_drag
-		velocity.x = apply_horizontal_forces(delta, grounded_forces)
-	else:
-		velocity.x = apply_horizontal_forces(delta, airborne_forces)
-		pass
 	
 	velocity.y = apply_vertical_forces(delta)
 	
@@ -210,6 +213,12 @@ func _physics_process(delta):
 	if is_grounded && abs(velocity.x) > 0:
 		emit_signal("trail_start", $trail_pos.global_position)
 		health -= heat_amount;
+		if (int(health) * 10) % 100 == 0:
+			recalculateAccelerationFromHealth(health)
+		if health <= 0:
+			print("dead X_X")
+			set_physics_process(false)
+			set_process(false)
 	else:
 		emit_signal("trail_end")
 
@@ -232,3 +241,9 @@ func _physics_process(delta):
 		time_since_last_move += delta
 	else:
 		time_since_last_move = 0
+
+func recalculateAccelerationFromHealth(health_val):
+	grounded_forces = precalculateAcceleration(
+		data.move_acceleration_time + lerp(1, 0, health_val / 100),
+		data.move_deceleration_time + lerp(1, 0, health_val / 100)
+	)

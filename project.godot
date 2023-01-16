@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Resources/platformer_data.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Platformer/Character/PlaformerCharacter.gd"
+}, {
 "base": "Node2D",
 "class": "SquashStretch",
 "language": "GDScript",
@@ -33,6 +38,7 @@ _global_script_class_icons={
 "HitBox": "",
 "HurtBox": "",
 "PlatformerData": "",
+"Player": "",
 "SquashStretch": ""
 }
 
@@ -48,7 +54,7 @@ EventBus="*res://Static/event_bus.gd"
 
 [display]
 
-window/size/width=1980
+window/size/width=1920
 window/size/height=1080
 window/size/test_width=1280
 window/size/test_height=720
@@ -86,6 +92,7 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 limits/buffers/canvas_polygon_buffer_size_kb=3000

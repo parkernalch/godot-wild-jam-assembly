@@ -1,0 +1,153 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Assets/vector/Asset 1.svg" type="Texture" id=1]
+[ext_resource path="res://Assets/vector/Asset 8.svg" type="Texture" id=2]
+[ext_resource path="res://Assets/px.jpg" type="Texture" id=3]
+[ext_resource path="res://Assets/vector/Asset 9.svg" type="Texture" id=4]
+[ext_resource path="res://Atoms/Platform.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Platformer/Character/PlaformerCharacter.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Atoms/Pickup/Pickup.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Assets/vector/Asset 3.svg" type="Texture" id=8]
+[ext_resource path="res://Assets/vector/Asset 11.svg" type="Texture" id=9]
+[ext_resource path="res://Assets/vector/Asset 4.svg" type="Texture" id=10]
+[ext_resource path="res://Assets/vector/Asset 5.svg" type="Texture" id=11]
+[ext_resource path="res://Atoms/FinishPipe.tscn" type="PackedScene" id=12]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 732.5, 23 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 379.5, 23 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 122, 16.5 )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Dots1" type="Sprite" parent="Background"]
+position = Vector2( 2076.5, 786 )
+texture = ExtResource( 4 )
+
+[node name="Dots2" type="Sprite" parent="Background"]
+position = Vector2( 592.5, 786 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+texture = ExtResource( 4 )
+
+[node name="Spout" type="Sprite" parent="Background"]
+position = Vector2( 1245, 902.5 )
+scale = Vector2( 1, 1.01163 )
+texture = ExtResource( 2 )
+
+[node name="Foreground" type="Node2D" parent="."]
+
+[node name="Purple" type="Sprite" parent="Foreground"]
+self_modulate = Color( 0.215686, 0.203922, 0.380392, 1 )
+position = Vector2( 959, 429 )
+scale = Vector2( 1921.5, 861.5 )
+texture = ExtResource( 3 )
+
+[node name="Game" type="Node2D" parent="Foreground"]
+position = Vector2( 1168.5, 427.5 )
+
+[node name="Background" type="Sprite" parent="Foreground/Game"]
+self_modulate = Color( 0.87451, 0.913725, 0.960784, 1 )
+position = Vector2( -28, -9.5 )
+scale = Vector2( 1465, 758 )
+texture = ExtResource( 3 )
+
+[node name="Walls" type="Node2D" parent="Foreground/Game"]
+
+[node name="Platform" parent="Foreground/Game/Walls" instance=ExtResource( 5 )]
+position = Vector2( -53.5, -365.5 )
+
+[node name="Sprite" parent="Foreground/Game/Walls/Platform" index="0"]
+position = Vector2( 25.5, 0 )
+scale = Vector2( 1465, 46 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Foreground/Game/Walls/Platform"]
+position = Vector2( 25.5, 0 )
+shape = SubResource( 1 )
+
+[node name="Platform2" parent="Foreground/Game/Walls" instance=ExtResource( 5 )]
+position = Vector2( -53.5, 346.5 )
+
+[node name="Sprite" parent="Foreground/Game/Walls/Platform2" index="0"]
+position = Vector2( 25.5, 0 )
+scale = Vector2( 1465, 46 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Foreground/Game/Walls/Platform2"]
+position = Vector2( 25.5, 0 )
+shape = SubResource( 1 )
+
+[node name="Platform3" parent="Foreground/Game/Walls" instance=ExtResource( 5 )]
+position = Vector2( -737.5, -73.5 )
+rotation = 1.5708
+
+[node name="Sprite" parent="Foreground/Game/Walls/Platform3" index="0"]
+position = Vector2( 65.098, 0 )
+scale = Vector2( 757.893, 46 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Foreground/Game/Walls/Platform3"]
+position = Vector2( 64.5, 0 )
+shape = SubResource( 2 )
+
+[node name="Platform4" parent="Foreground/Game/Walls" instance=ExtResource( 5 )]
+position = Vector2( 681.5, -73.5 )
+rotation = 1.5708
+
+[node name="Sprite" parent="Foreground/Game/Walls/Platform4" index="0"]
+position = Vector2( 65.098, 0 )
+scale = Vector2( 757.893, 46 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Foreground/Game/Walls/Platform4"]
+position = Vector2( 64.5, 0 )
+shape = SubResource( 2 )
+
+[node name="Platforms" type="Node2D" parent="Foreground/Game"]
+
+[node name="Platform" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
+position = Vector2( -592.5, -157.5 )
+
+[node name="Sprite" parent="Foreground/Game/Platforms/Platform" index="0"]
+scale = Vector2( 244, 33 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Foreground/Game/Platforms/Platform"]
+shape = SubResource( 3 )
+
+[node name="Interactables" type="Node2D" parent="Foreground/Game"]
+
+[node name="FinishPipe" parent="Foreground/Game/Interactables" instance=ExtResource( 12 )]
+position = Vector2( 82.5, 334.5 )
+
+[node name="SodaPickup" parent="Foreground/Game/Interactables" instance=ExtResource( 7 )]
+position = Vector2( -644.5, 241.5 )
+pickup_sprite = ExtResource( 8 )
+
+[node name="CoffeePickup" parent="Foreground/Game/Interactables" instance=ExtResource( 7 )]
+position = Vector2( 578.5, 258.5 )
+pickup_sprite = ExtResource( 10 )
+
+[node name="IcePickup" parent="Foreground/Game/Interactables" instance=ExtResource( 7 )]
+position = Vector2( 65.5, 78.5 )
+pickup_sprite = ExtResource( 9 )
+
+[node name="MilkPickup" parent="Foreground/Game/Interactables" instance=ExtResource( 7 )]
+position = Vector2( -269.5, -247.5 )
+pickup_sprite = ExtResource( 11 )
+
+[node name="Player" parent="Foreground/Game" instance=ExtResource( 6 )]
+position = Vector2( -595.5, -320.5 )
+
+[node name="Asset1" type="Sprite" parent="."]
+position = Vector2( 572, 73 )
+scale = Vector2( 1, -1 )
+texture = ExtResource( 1 )
+
+[editable path="Foreground/Game/Walls/Platform"]
+[editable path="Foreground/Game/Walls/Platform2"]
+[editable path="Foreground/Game/Walls/Platform3"]
+[editable path="Foreground/Game/Walls/Platform4"]
+[editable path="Foreground/Game/Platforms/Platform"]

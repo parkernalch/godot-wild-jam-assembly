@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Assets/px.jpg" type="Texture" id=1]
+
+[node name="Platform" type="StaticBody2D"]
+self_modulate = Color( 0.411765, 0.458824, 0.580392, 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+self_modulate = Color( 0.411765, 0.458824, 0.580392, 1 )
+texture = ExtResource( 1 )

@@ -12,7 +12,8 @@ void fragment() {
 	
 	float healthCheck = UV.y > 1.0 - health ? 1.0 : 0.0;
 	vec4 healthMask = vec4(healthCheck,healthCheck,healthCheck,healthCheck);
-	COLOR = healthMask * curr_color * blueShade;
+//	COLOR = healthMask * curr_color * blueShade;
+	COLOR = healthMask * curr_color;
 }"
 
 [resource]

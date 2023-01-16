@@ -175,8 +175,6 @@ func _physics_process(delta):
 		wall_drag_strength = max(wall_drag_strength - delta / data.wall_drag_decay_time, 0)
 	
 	if was_airborne and is_grounded:
-		if $AnimatedSprite.has_method("squash_and_stretch"):
-			$AnimatedSprite.squash_and_stretch(0.25, 0.25)
 		$WallJumpControlTimer.stop()
 		emit_signal("landed", cached_velocity)
 	if not was_airborne and not is_grounded:
@@ -229,8 +227,6 @@ func _physics_process(delta):
 		Vector2.UP, 
 		true
 	)
-	if cached_velocity.x != 0 and velocity.x == 0 and (left_cast.is_colliding() or right_cast.is_colliding()):
-		$AnimatedSprite.stretch(0.25, 0.2)
 	cached_velocity = velocity
 	
 	if was_stationary and velocity.x != 0:

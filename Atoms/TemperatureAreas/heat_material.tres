@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+const float tau = 6.283185307179586;
+void fragment() {
+//	vec2 distortedUV = SCREEN_UV + texture(SCREEN_TEXTURE, UV).r * 0.05;
+//	vec4 screenColor = texture(SCREEN_TEXTURE, distortedUV);
+//	COLOR = screenColor;
+	vec4 screenColor = texture(SCREEN_TEXTURE, UV);
+	COLOR = screenColor;
+}"
+
+[resource]
+shader = SubResource( 1 )

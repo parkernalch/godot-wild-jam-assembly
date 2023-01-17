@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Atoms/HitDetection/hurt_box.gd"
 }, {
+"base": "StaticBody2D",
+"class": "Platform",
+"language": "GDScript",
+"path": "res://Atoms/Platform.gd"
+}, {
 "base": "Resource",
 "class": "PlatformerData",
 "language": "GDScript",
@@ -37,6 +42,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "HitBox": "",
 "HurtBox": "",
+"Platform": "",
 "PlatformerData": "",
 "Player": "",
 "SquashStretch": ""
@@ -51,6 +57,7 @@ config/icon="res://icon.png"
 [autoload]
 
 EventBus="*res://Static/event_bus.gd"
+Globals="*res://Static/globals.gd"
 
 [display]
 

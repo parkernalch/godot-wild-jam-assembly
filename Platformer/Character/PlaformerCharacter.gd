@@ -113,7 +113,6 @@ func _process(delta):
 	if jump_pressed:
 		jump_buffer_timer.start(data.jump_buffer_timeout)
 	jump_released = Input.is_action_just_released("jump")
-	pass
 	
 func apply_horizontal_forces(delta, forces):
 	var isNearTopSpeed = abs(velocity.x) >= top_speed * 0.95
@@ -155,6 +154,7 @@ func apply_vertical_forces(delta):
 	return v
 	
 func _physics_process(delta):
+	apply_heat_differential(delta)
 	var was_airborne = not is_grounded
 	var was_stationary = time_since_last_move > 0.5 and is_grounded
 	is_grounded = cast.is_colliding() or cast2.is_colliding()
@@ -244,3 +244,31 @@ func recalculateAccelerationFromHealth(health_val):
 		data.move_acceleration_time + lerp(1, 0, health_val / 100),
 		data.move_deceleration_time + lerp(1, 0, health_val / 100)
 	)
+
+func apply_heat_differential(delta):
+	var effective_temp = 0;
+	if is_on_wall():
+		var left_wall = left_cast.get_collider()
+		var right_wall = right_cast.get_collider()
+		if left_wall is Platform:
+			effective_temp += left_wall.temperature
+		if right_wall is Platform:
+			effective_temp += right_wall.temperature
+		pass
+	if is_on_floor():
+		var floor1 = cast.get_collider()
+		var floor2 = cast.get_collider()
+		if floor1 == floor2 and floor1 is Platform:
+			effective_temp += floor1.temperature
+		else:
+			if floor1 is Platform:
+				effective_temp += floor1.temperature
+			if floor2 is Platform:
+				effective_temp += floor2.temperature
+		pass
+	health = clamp(health - effective_temp, 0, 100)
+	health_material.set_shader_param("health",health/max_health);
+	if health < 0:
+		set_process(false)
+		set_physics_process(false)
+		print("dead X_X")

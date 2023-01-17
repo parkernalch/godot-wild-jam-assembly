@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Assets/vector/Asset 1.svg" type="Texture" id=1]
 [ext_resource path="res://Assets/vector/Asset 8.svg" type="Texture" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Assets/vector/Asset 5.svg" type="Texture" id=11]
 [ext_resource path="res://Atoms/FinishPipe.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Platformer/Character/trail.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Atoms/TemperatureAreas/temp_area.tscn" type="PackedScene" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 732.5, 23 )
@@ -58,6 +59,12 @@ self_modulate = Color( 0.87451, 0.913725, 0.960784, 1 )
 position = Vector2( -28, -9.5 )
 scale = Vector2( 1465, 758 )
 texture = ExtResource( 3 )
+
+[node name="TempAreas" type="Node2D" parent="Foreground/Game"]
+
+[node name="TempArea2" parent="Foreground/Game/TempAreas" instance=ExtResource( 14 )]
+position = Vector2( -383.5, 318.5 )
+scale = Vector2( 1, 1 )
 
 [node name="Walls" type="Node2D" parent="Foreground/Game"]
 

@@ -1,0 +1,18 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform float temperature_value : hint_range(-1., 1.) = 0.0;
+uniform vec4 red_color: hint_color;
+uniform vec4 blue_color: hint_color;
+uniform sampler2D platform_sprite;
+
+void fragment() {
+	vec4 tex_color = texture(platform_sprite, UV);
+	vec4 red_amt = mix(vec4(1.), red_color, temperature_value);
+	vec4 blue_amt = mix(vec4(1.), blue_color, 0.- temperature_value);
+	
+	COLOR = mix(blue_amt, red_amt, (temperature_value + 1.)/2.) * tex_color;
+}"

@@ -1,7 +1,7 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Assets/vector/Asset 1.svg" type="Texture" id=1]
-[ext_resource path="res://Assets/vector/Asset 8.svg" type="Texture" id=2]
+[ext_resource path="res://Atoms/Spout/Spout.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/px.jpg" type="Texture" id=3]
 [ext_resource path="res://Assets/vector/Asset 9.svg" type="Texture" id=4]
 [ext_resource path="res://Atoms/Platform.tscn" type="PackedScene" id=5]
@@ -13,35 +13,106 @@
 [ext_resource path="res://Assets/vector/Asset 5.svg" type="Texture" id=11]
 [ext_resource path="res://Atoms/FinishPipe.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Platformer/Character/trail.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Atoms/TemperatureAreas/temp_area.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Assets/vector/Asset 7.svg" type="Texture" id=14]
+[ext_resource path="res://Atoms/Platform.gd" type="Script" id=15]
+[ext_resource path="res://Atoms/temperatureEmitter.tscn" type="PackedScene" id=16]
+
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform float temperature_value : hint_range(-1., 1.) = 0.0;
+uniform vec4 red_color: hint_color;
+uniform vec4 blue_color: hint_color;
+uniform sampler2D platform_sprite;
+
+void fragment() {
+	vec4 tex_color = texture(platform_sprite, UV);
+	vec4 red_amt = mix(vec4(1.), red_color, temperature_value);
+	vec4 blue_amt = mix(vec4(1.), blue_color, 0.- temperature_value);
+	
+	COLOR = mix(blue_amt, red_amt, (temperature_value + 1.)/2.) * tex_color;
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = SubResource( 2 )
+shader_param/temperature_value = 0.0
+shader_param/red_color = Color( 1, 0, 0, 1 )
+shader_param/blue_color = Color( 0.380392, 0.941176, 1, 1 )
+shader_param/platform_sprite = ExtResource( 14 )
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 732.5, 23 )
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="ShaderMaterial" id=5]
+resource_local_to_scene = true
+shader = SubResource( 2 )
+shader_param/temperature_value = 0.0
+shader_param/red_color = Color( 1, 0, 0, 1 )
+shader_param/blue_color = Color( 0.380392, 0.941176, 1, 1 )
+shader_param/platform_sprite = ExtResource( 14 )
+
+[sub_resource type="ShaderMaterial" id=6]
+resource_local_to_scene = true
+shader = SubResource( 2 )
+shader_param/temperature_value = 0.0
+shader_param/red_color = Color( 1, 0, 0, 1 )
+shader_param/blue_color = Color( 0.380392, 0.941176, 1, 1 )
+shader_param/platform_sprite = ExtResource( 14 )
+
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 379.5, 23 )
 
+[sub_resource type="ShaderMaterial" id=8]
+resource_local_to_scene = true
+shader = SubResource( 2 )
+shader_param/temperature_value = 0.0
+shader_param/red_color = Color( 1, 0, 0, 1 )
+shader_param/blue_color = Color( 0.380392, 0.941176, 1, 1 )
+shader_param/platform_sprite = ExtResource( 14 )
+
+[sub_resource type="Shader" id=9]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform float temperature_value : hint_range(-1., 1.) = 0.0;
+uniform vec4 red_color: hint_color;
+uniform vec4 blue_color: hint_color;
+uniform sampler2D platform_sprite;
+
+void fragment() {
+	vec4 tex_color = texture(platform_sprite, UV);
+	vec4 red_amt = mix(vec4(1.), red_color, temperature_value);
+	vec4 blue_amt = mix(vec4(1.), blue_color, 0.- temperature_value);
+	
+	COLOR = mix(blue_amt, red_amt, (temperature_value + 1.)/2.) * tex_color;
+}"
+
+[sub_resource type="ShaderMaterial" id=10]
+resource_local_to_scene = true
+shader = SubResource( 9 )
+shader_param/temperature_value = 0.0
+shader_param/red_color = Color( 1, 0, 0, 1 )
+shader_param/blue_color = Color( 0.380392, 0.941176, 1, 1 )
+shader_param/platform_sprite = ExtResource( 14 )
+
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 122, 16.5 )
+extents = Vector2( 0.979157, 0.0281144 )
 
 [node name="Node2D" type="Node2D"]
 
 [node name="Background" type="Node2D" parent="."]
 
 [node name="Dots1" type="Sprite" parent="Background"]
-position = Vector2( 2076.5, 786 )
+position = Vector2( 2018, 786 )
 texture = ExtResource( 4 )
 
 [node name="Dots2" type="Sprite" parent="Background"]
-position = Vector2( 592.5, 786 )
+position = Vector2( 713.01, 905.567 )
 rotation = 3.14159
-scale = Vector2( 1, -1 )
+scale = Vector2( 1.23298, -1.23298 )
 texture = ExtResource( 4 )
-
-[node name="Spout" type="Sprite" parent="Background"]
-position = Vector2( 1245, 902.5 )
-scale = Vector2( 1, 1.01163 )
-texture = ExtResource( 2 )
 
 [node name="Foreground" type="Node2D" parent="."]
 
@@ -56,24 +127,24 @@ position = Vector2( 1168.5, 427.5 )
 
 [node name="Background" type="Sprite" parent="Foreground/Game"]
 self_modulate = Color( 0.87451, 0.913725, 0.960784, 1 )
-position = Vector2( -28, -9.5 )
-scale = Vector2( 1465, 758 )
+position = Vector2( -27, -9.49997 )
+scale = Vector2( 1417, 712 )
 texture = ExtResource( 3 )
-
-[node name="TempAreas" type="Node2D" parent="Foreground/Game"]
-
-[node name="TempArea2" parent="Foreground/Game/TempAreas" instance=ExtResource( 14 )]
-position = Vector2( -383.5, 318.5 )
-scale = Vector2( 1, 1 )
 
 [node name="Walls" type="Node2D" parent="Foreground/Game"]
 
 [node name="Platform" parent="Foreground/Game/Walls" instance=ExtResource( 5 )]
 position = Vector2( -53.5, -365.5 )
 
-[node name="Sprite" parent="Foreground/Game/Walls/Platform" index="0"]
-position = Vector2( 25.5, 0 )
-scale = Vector2( 1465, 46 )
+[node name="NinePatchRect" parent="Foreground/Game/Walls/Platform" index="0"]
+material = SubResource( 4 )
+margin_left = -706.0
+margin_top = -24.0
+margin_right = 757.0
+margin_bottom = 23.0
+
+[node name="TempSprite" parent="Foreground/Game/Walls/Platform" index="2"]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Foreground/Game/Walls/Platform"]
 position = Vector2( 25.5, 0 )
@@ -82,9 +153,15 @@ shape = SubResource( 1 )
 [node name="Platform2" parent="Foreground/Game/Walls" instance=ExtResource( 5 )]
 position = Vector2( -53.5, 346.5 )
 
-[node name="Sprite" parent="Foreground/Game/Walls/Platform2" index="0"]
-position = Vector2( 25.5, 0 )
-scale = Vector2( 1465, 46 )
+[node name="NinePatchRect" parent="Foreground/Game/Walls/Platform2" index="0"]
+material = SubResource( 5 )
+margin_left = -705.0
+margin_top = -26.0
+margin_right = 756.0
+margin_bottom = 23.0
+
+[node name="TempSprite" parent="Foreground/Game/Walls/Platform2" index="2"]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Foreground/Game/Walls/Platform2"]
 position = Vector2( 25.5, 0 )
@@ -94,36 +171,83 @@ shape = SubResource( 1 )
 position = Vector2( -737.5, -73.5 )
 rotation = 1.5708
 
-[node name="Sprite" parent="Foreground/Game/Walls/Platform3" index="0"]
-position = Vector2( 65.098, 0 )
-scale = Vector2( 757.893, 46 )
+[node name="NinePatchRect" parent="Foreground/Game/Walls/Platform3" index="0"]
+material = SubResource( 6 )
+margin_left = -315.0
+margin_top = -27.0
+margin_right = 442.0
+margin_bottom = 22.0
+
+[node name="TempSprite" parent="Foreground/Game/Walls/Platform3" index="2"]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Foreground/Game/Walls/Platform3"]
 position = Vector2( 64.5, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 7 )
 
 [node name="Platform4" parent="Foreground/Game/Walls" instance=ExtResource( 5 )]
 position = Vector2( 681.5, -73.5 )
 rotation = 1.5708
 
-[node name="Sprite" parent="Foreground/Game/Walls/Platform4" index="0"]
-position = Vector2( 65.098, 0 )
-scale = Vector2( 757.893, 46 )
+[node name="NinePatchRect" parent="Foreground/Game/Walls/Platform4" index="0"]
+material = SubResource( 8 )
+margin_left = -314.0
+margin_top = -21.0
+margin_right = 442.0
+margin_bottom = 24.0
+
+[node name="TempSprite" parent="Foreground/Game/Walls/Platform4" index="2"]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Foreground/Game/Walls/Platform4"]
 position = Vector2( 64.5, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 7 )
 
 [node name="Platforms" type="Node2D" parent="Foreground/Game"]
 
-[node name="Platform" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
-position = Vector2( -592.5, -157.5 )
+[node name="Platform2" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
+position = Vector2( -258.5, -24.5 )
+scale = Vector2( 6, 3 )
+temperature = -0.138
 
-[node name="Sprite" parent="Foreground/Game/Platforms/Platform" index="0"]
-scale = Vector2( 244, 33 )
+[node name="Platform" type="StaticBody2D" parent="Foreground/Game/Platforms"]
+self_modulate = Color( 0.411765, 0.458824, 0.580392, 1 )
+position = Vector2( -645.5, -177.5 )
+scale = Vector2( 6, 3 )
+script = ExtResource( 15 )
+temperature = -0.263
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Foreground/Game/Platforms/Platform"]
+material = SubResource( 10 )
+margin_right = 42.0
+margin_bottom = 11.0
+texture = ExtResource( 14 )
+patch_margin_left = 21
+patch_margin_right = 21
+
+[node name="Label" type="Label" parent="Foreground/Game/Platforms/Platform"]
+margin_right = 40.0
+margin_bottom = 14.0
+
+[node name="TempSprite" parent="Foreground/Game/Platforms/Platform" instance=ExtResource( 16 )]
+position = Vector2( 21, -24 )
+scale = Vector2( 0.095, 0.095 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Foreground/Game/Platforms/Platform"]
+visible = false
+position = Vector2( 21.5, 5.5 )
+scale = Vector2( 18.8938, -195.629 )
 shape = SubResource( 3 )
+
+[node name="Platform3" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
+position = Vector2( -541.5, 171.5 )
+scale = Vector2( 6, 3 )
+temperature = -0.543
+
+[node name="Platform4" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
+position = Vector2( 96.5, 131.5 )
+scale = Vector2( 6, 3 )
+temperature = 0.916
 
 [node name="Interactables" type="Node2D" parent="Foreground/Game"]
 
@@ -131,25 +255,32 @@ shape = SubResource( 3 )
 position = Vector2( 82.5, 334.5 )
 
 [node name="SodaPickup" parent="Foreground/Game/Interactables" instance=ExtResource( 7 )]
-position = Vector2( -644.5, 241.5 )
+position = Vector2( -639.5, 246.5 )
 pickup_sprite = ExtResource( 8 )
+pickup_type = "soda"
 
 [node name="CoffeePickup" parent="Foreground/Game/Interactables" instance=ExtResource( 7 )]
-position = Vector2( 578.5, 258.5 )
+position = Vector2( 608.5, -271.5 )
 pickup_sprite = ExtResource( 10 )
+pickup_type = "coffee"
 
 [node name="IcePickup" parent="Foreground/Game/Interactables" instance=ExtResource( 7 )]
-position = Vector2( 65.5, 78.5 )
+position = Vector2( 586.5, 255.5 )
 pickup_sprite = ExtResource( 9 )
+pickup_type = "ice"
 
 [node name="MilkPickup" parent="Foreground/Game/Interactables" instance=ExtResource( 7 )]
-position = Vector2( -269.5, -247.5 )
+position = Vector2( -195.5, -269.5 )
 pickup_sprite = ExtResource( 11 )
+pickup_type = "milk"
 
 [node name="Player" parent="Foreground/Game" instance=ExtResource( 6 )]
 position = Vector2( -595.5, -320.5 )
 
-[node name="Asset1" type="Sprite" parent="."]
+[node name="Spout" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1256, 902 )
+
+[node name="EntryPipe" type="Sprite" parent="."]
 position = Vector2( 572, 73 )
 scale = Vector2( 1, -1 )
 texture = ExtResource( 1 )
@@ -158,6 +289,12 @@ texture = ExtResource( 1 )
 length = 50
 target_path = NodePath("../Foreground/Game/Player")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 1132, 374 )
+offset = Vector2( 0, 26 )
+current = true
+zoom = Vector2( 1.1, 1.1 )
+
 [connection signal="trail_end" from="Foreground/Game/Player" to="trail" method="_stop_emitting"]
 [connection signal="trail_start" from="Foreground/Game/Player" to="trail" method="_add_trail_point"]
 
@@ -165,4 +302,4 @@ target_path = NodePath("../Foreground/Game/Player")
 [editable path="Foreground/Game/Walls/Platform2"]
 [editable path="Foreground/Game/Walls/Platform3"]
 [editable path="Foreground/Game/Walls/Platform4"]
-[editable path="Foreground/Game/Platforms/Platform"]
+[editable path="Spout"]

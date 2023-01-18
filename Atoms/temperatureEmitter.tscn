@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Atoms/TemperatureAreas/heat_material.tres" type="Material" id=1]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+
+[sub_resource type="NoiseTexture" id=2]
+seamless = true
+noise = SubResource( 1 )
+
+[node name="temperature_sprite" type="Sprite"]
+material = ExtResource( 1 )
+z_index = 10
+texture = SubResource( 2 )

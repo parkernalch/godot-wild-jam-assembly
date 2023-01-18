@@ -1,7 +1,7 @@
 shader_type canvas_item;
 render_mode unshaded;
 
-uniform float temperatureRange : hint_range(-1.0, 1.0);
+uniform float temperature_value;
 uniform vec4 hotColor : hint_color;
 uniform vec4 coldColor : hint_color;
 
@@ -19,6 +19,7 @@ uniform vec2 scroll;
 uniform vec2 scroll2;
 uniform sampler2D noiseTexture;
 uniform sampler2D colorTexture;
+uniform sampler2D mask: hint_albedo;
 
 void vertex() {
     vec2 v_clip_position = (PROJECTION_MATRIX * WORLD_MATRIX * vec4(v_local_position, 0.0, 1.0)).xy;
@@ -26,15 +27,15 @@ void vertex() {
 }
 
 void fragment() {
-	float currentHot = clamp(temperatureRange, 0.0, 1.0);
-	float currentCold = -clamp(temperatureRange, -1.0, 0.0);
-	vec4 hotnessColor = (hotColor * currentHot);
-	vec4 coldnessColor = (coldColor * currentCold);
-	float effectStrength = coldFXStrength * currentCold;
-	vec2 modifiedUVHot = SCREEN_UV;
-	vec2 modifiedUVCold = SCREEN_UV;
-	
-    modifiedUVHot.x -= heatAmplitude * sin(heatPeriod * (modifiedUVHot.y + heatPhaseShift) + TIME);
+//	float currentHot = clamp(temperature_value, 0.0, 1.0);
+//	float currentCold = -clamp(temperature_value, -1.0, 0.0);
+//	vec4 hotnessColor = (hotColor * currentHot);
+//	vec4 coldnessColor = (coldColor * currentCold);
+//	float effectStrength = coldFXStrength * currentCold;
+//	vec2 modifiedUVHot = SCREEN_UV;
+//	vec2 modifiedUVCold = SCREEN_UV;
+//
+//    modifiedUVHot.x -= heatAmplitude * sin(heatPeriod * (modifiedUVHot.y + heatPhaseShift) + TIME);
 	
 	// get screen uvs within current uv
 
@@ -52,7 +53,17 @@ void fragment() {
 
 //	if (sdf < .2) { color.a = sdf; }
 //	color.a = 1.0-sdf;
-	COLOR = color;
+	vec4 shader = texture(mask, UV + vec2(0, .2) * TIME).rgba;
+	if (temperature_value > 0.0) {
+	    COLOR.rgb = color.rgb;
+	    COLOR.a = shader.r;
+		COLOR.a *= UV.y * (temperature_value * 2.0);
+		COLOR.a *= 1.0-cos(UV.x*6.23);
+		COLOR.a *= energy*3.0;
+	} else {
+		COLOR.a = 0.0;
+	}
+	
 	
 //	COLOR = vec4(sdf,sdf,sdf,1);
 //	vec2 distortedUV = SCREEN_UV;

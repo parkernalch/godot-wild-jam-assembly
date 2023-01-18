@@ -1,10 +1,60 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Assets/px.jpg" type="Texture" id=1]
+[ext_resource path="res://Atoms/Platform.gd" type="Script" id=1]
+[ext_resource path="res://Assets/vector/Asset 7.svg" type="Texture" id=2]
+[ext_resource path="res://Atoms/temperatureEmitter.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Shader" id=9]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform float temperature_value : hint_range(-1., 1.) = 0.0;
+uniform vec4 red_color: hint_color;
+uniform vec4 blue_color: hint_color;
+uniform sampler2D platform_sprite;
+
+void fragment() {
+	vec4 tex_color = texture(platform_sprite, UV);
+	vec4 red_amt = mix(vec4(1.), red_color, temperature_value);
+	vec4 blue_amt = mix(vec4(1.), blue_color, 0.- temperature_value);
+	
+	COLOR = mix(blue_amt, red_amt, (temperature_value + 1.)/2.) * tex_color;
+}"
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = SubResource( 9 )
+shader_param/temperature_value = 0.0
+shader_param/red_color = Color( 1, 0, 0, 1 )
+shader_param/blue_color = Color( 0.380392, 0.941176, 1, 1 )
+shader_param/platform_sprite = ExtResource( 2 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 0.979157, 0.0281144 )
 
 [node name="Platform" type="StaticBody2D"]
 self_modulate = Color( 0.411765, 0.458824, 0.580392, 1 )
+position = Vector2( 3, 0 )
+script = ExtResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="."]
-self_modulate = Color( 0.411765, 0.458824, 0.580392, 1 )
-texture = ExtResource( 1 )
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+material = SubResource( 1 )
+margin_right = 42.0
+margin_bottom = 11.0
+texture = ExtResource( 2 )
+patch_margin_left = 21
+patch_margin_right = 21
+
+[node name="Label" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+
+[node name="TempSprite" parent="." instance=ExtResource( 3 )]
+position = Vector2( 21, -24 )
+scale = Vector2( 0.095, 0.095 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 21.5, 5.5 )
+scale = Vector2( 18.8938, -195.629 )
+shape = SubResource( 3 )

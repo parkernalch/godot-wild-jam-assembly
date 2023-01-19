@@ -1,0 +1,11 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+uniform sampler2D color;
+
+void fragment() {
+	vec4 trailColor = texture(color, UV);
+	COLOR.rgba = trailColor;
+}"

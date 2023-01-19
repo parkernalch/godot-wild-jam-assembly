@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://Assets/vector/Asset 1.svg" type="Texture" id=1]
 [ext_resource path="res://Atoms/Spout/Spout.tscn" type="PackedScene" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://Assets/vector/Asset 7.svg" type="Texture" id=14]
 [ext_resource path="res://Atoms/Platform.gd" type="Script" id=15]
 [ext_resource path="res://Atoms/temperatureEmitter.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Atoms/TemperatureAreas/temp_shader.shader" type="Shader" id=17]
 
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
@@ -42,10 +43,47 @@ shader_param/red_color = Color( 1, 0, 0, 1 )
 shader_param/blue_color = Color( 0.380392, 0.941176, 1, 1 )
 shader_param/platform_sprite = ExtResource( 14 )
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.216374, 0.304094, 0.479532 )
+colors = PoolColorArray( 0.0705882, 0.00392157, 0, 0, 1, 0.0296627, 0, 1, 1, 0.8119, 0.26689, 1, 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture2D" id=11]
+gradient = SubResource( 1 )
+
+[sub_resource type="OpenSimplexNoise" id=5]
+
+[sub_resource type="NoiseTexture" id=6]
+seamless = true
+noise = SubResource( 5 )
+
+[sub_resource type="OpenSimplexNoise" id=3]
+
+[sub_resource type="NoiseTexture" id=12]
+seamless = true
+noise = SubResource( 3 )
+
+[sub_resource type="ShaderMaterial" id=13]
+resource_local_to_scene = true
+shader = ExtResource( 17 )
+shader_param/temperature_value = 1.0
+shader_param/hotColor = Color( 0.972549, 0.513726, 0.513726, 1 )
+shader_param/coldColor = Color( 0.239216, 0.517647, 1, 1 )
+shader_param/heatAmplitude = 0.141
+shader_param/heatPeriod = 32.0
+shader_param/heatPhaseShift = 1.056
+shader_param/heatUpperLimit = 10.0
+shader_param/coldFXStrength = null
+shader_param/v_local_position = Vector2( 0, 0 )
+shader_param/scroll = Vector2( 0.12, 0.15 )
+shader_param/scroll2 = Vector2( -0.2, 0.2 )
+shader_param/noiseTexture = SubResource( 12 )
+shader_param/colorTexture = SubResource( 11 )
+shader_param/mask = SubResource( 6 )
+
+[sub_resource type="RectangleShape2D" id=14]
 extents = Vector2( 732.5, 23 )
 
-[sub_resource type="ShaderMaterial" id=5]
+[sub_resource type="ShaderMaterial" id=15]
 resource_local_to_scene = true
 shader = SubResource( 2 )
 shader_param/temperature_value = 0.0
@@ -53,13 +91,49 @@ shader_param/red_color = Color( 1, 0, 0, 1 )
 shader_param/blue_color = Color( 0.380392, 0.941176, 1, 1 )
 shader_param/platform_sprite = ExtResource( 14 )
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="ShaderMaterial" id=16]
+resource_local_to_scene = true
+shader = ExtResource( 17 )
+shader_param/temperature_value = 1.0
+shader_param/hotColor = Color( 0.972549, 0.513726, 0.513726, 1 )
+shader_param/coldColor = Color( 0.239216, 0.517647, 1, 1 )
+shader_param/heatAmplitude = 0.141
+shader_param/heatPeriod = 32.0
+shader_param/heatPhaseShift = 1.056
+shader_param/heatUpperLimit = 10.0
+shader_param/coldFXStrength = null
+shader_param/v_local_position = Vector2( 0, 0 )
+shader_param/scroll = Vector2( 0.12, 0.15 )
+shader_param/scroll2 = Vector2( -0.2, 0.2 )
+shader_param/noiseTexture = SubResource( 12 )
+shader_param/colorTexture = SubResource( 11 )
+shader_param/mask = SubResource( 6 )
+
+[sub_resource type="ShaderMaterial" id=17]
 resource_local_to_scene = true
 shader = SubResource( 2 )
 shader_param/temperature_value = 0.0
 shader_param/red_color = Color( 1, 0, 0, 1 )
 shader_param/blue_color = Color( 0.380392, 0.941176, 1, 1 )
 shader_param/platform_sprite = ExtResource( 14 )
+
+[sub_resource type="ShaderMaterial" id=18]
+resource_local_to_scene = true
+shader = ExtResource( 17 )
+shader_param/temperature_value = 1.0
+shader_param/hotColor = Color( 0.972549, 0.513726, 0.513726, 1 )
+shader_param/coldColor = Color( 0.239216, 0.517647, 1, 1 )
+shader_param/heatAmplitude = 0.141
+shader_param/heatPeriod = 32.0
+shader_param/heatPhaseShift = 1.056
+shader_param/heatUpperLimit = 10.0
+shader_param/coldFXStrength = null
+shader_param/v_local_position = Vector2( 0, 0 )
+shader_param/scroll = Vector2( 0.12, 0.15 )
+shader_param/scroll2 = Vector2( -0.2, 0.2 )
+shader_param/noiseTexture = SubResource( 12 )
+shader_param/colorTexture = SubResource( 11 )
+shader_param/mask = SubResource( 6 )
 
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 379.5, 23 )
@@ -71,6 +145,24 @@ shader_param/temperature_value = 0.0
 shader_param/red_color = Color( 1, 0, 0, 1 )
 shader_param/blue_color = Color( 0.380392, 0.941176, 1, 1 )
 shader_param/platform_sprite = ExtResource( 14 )
+
+[sub_resource type="ShaderMaterial" id=19]
+resource_local_to_scene = true
+shader = ExtResource( 17 )
+shader_param/temperature_value = 1.0
+shader_param/hotColor = Color( 0.972549, 0.513726, 0.513726, 1 )
+shader_param/coldColor = Color( 0.239216, 0.517647, 1, 1 )
+shader_param/heatAmplitude = 0.141
+shader_param/heatPeriod = 32.0
+shader_param/heatPhaseShift = 1.056
+shader_param/heatUpperLimit = 10.0
+shader_param/coldFXStrength = null
+shader_param/v_local_position = Vector2( 0, 0 )
+shader_param/scroll = Vector2( 0.12, 0.15 )
+shader_param/scroll2 = Vector2( -0.2, 0.2 )
+shader_param/noiseTexture = SubResource( 12 )
+shader_param/colorTexture = SubResource( 11 )
+shader_param/mask = SubResource( 6 )
 
 [sub_resource type="Shader" id=9]
 code = "shader_type canvas_item;
@@ -97,7 +189,25 @@ shader_param/red_color = Color( 1, 0, 0, 1 )
 shader_param/blue_color = Color( 0.380392, 0.941176, 1, 1 )
 shader_param/platform_sprite = ExtResource( 14 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="ShaderMaterial" id=20]
+resource_local_to_scene = true
+shader = ExtResource( 17 )
+shader_param/temperature_value = 1.0
+shader_param/hotColor = Color( 0.972549, 0.513726, 0.513726, 1 )
+shader_param/coldColor = Color( 0.239216, 0.517647, 1, 1 )
+shader_param/heatAmplitude = 0.141
+shader_param/heatPeriod = 32.0
+shader_param/heatPhaseShift = 1.056
+shader_param/heatUpperLimit = 10.0
+shader_param/coldFXStrength = null
+shader_param/v_local_position = Vector2( 0, 0 )
+shader_param/scroll = Vector2( 0.12, 0.15 )
+shader_param/scroll2 = Vector2( -0.2, 0.2 )
+shader_param/noiseTexture = SubResource( 12 )
+shader_param/colorTexture = SubResource( 11 )
+shader_param/mask = SubResource( 6 )
+
+[sub_resource type="RectangleShape2D" id=21]
 extents = Vector2( 0.979157, 0.0281144 )
 
 [node name="Node2D" type="Node2D"]
@@ -145,16 +255,17 @@ margin_bottom = 23.0
 
 [node name="TempSprite" parent="Foreground/Game/Walls/Platform" index="2"]
 visible = false
+material = SubResource( 13 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Foreground/Game/Walls/Platform"]
 position = Vector2( 25.5, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 14 )
 
 [node name="Platform2" parent="Foreground/Game/Walls" instance=ExtResource( 5 )]
 position = Vector2( -53.5, 346.5 )
 
 [node name="NinePatchRect" parent="Foreground/Game/Walls/Platform2" index="0"]
-material = SubResource( 5 )
+material = SubResource( 15 )
 margin_left = -705.0
 margin_top = -26.0
 margin_right = 756.0
@@ -162,17 +273,18 @@ margin_bottom = 23.0
 
 [node name="TempSprite" parent="Foreground/Game/Walls/Platform2" index="2"]
 visible = false
+material = SubResource( 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Foreground/Game/Walls/Platform2"]
 position = Vector2( 25.5, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 14 )
 
 [node name="Platform3" parent="Foreground/Game/Walls" instance=ExtResource( 5 )]
 position = Vector2( -737.5, -73.5 )
 rotation = 1.5708
 
 [node name="NinePatchRect" parent="Foreground/Game/Walls/Platform3" index="0"]
-material = SubResource( 6 )
+material = SubResource( 17 )
 margin_left = -315.0
 margin_top = -27.0
 margin_right = 442.0
@@ -180,6 +292,7 @@ margin_bottom = 22.0
 
 [node name="TempSprite" parent="Foreground/Game/Walls/Platform3" index="2"]
 visible = false
+material = SubResource( 18 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Foreground/Game/Walls/Platform3"]
 position = Vector2( 64.5, 0 )
@@ -198,6 +311,7 @@ margin_bottom = 24.0
 
 [node name="TempSprite" parent="Foreground/Game/Walls/Platform4" index="2"]
 visible = false
+material = SubResource( 19 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Foreground/Game/Walls/Platform4"]
 position = Vector2( 64.5, 0 )
@@ -230,6 +344,7 @@ margin_right = 40.0
 margin_bottom = 14.0
 
 [node name="TempSprite" parent="Foreground/Game/Platforms/Platform" instance=ExtResource( 16 )]
+material = SubResource( 20 )
 position = Vector2( 21, -24 )
 scale = Vector2( 0.095, 0.095 )
 
@@ -237,7 +352,7 @@ scale = Vector2( 0.095, 0.095 )
 visible = false
 position = Vector2( 21.5, 5.5 )
 scale = Vector2( 18.8938, -195.629 )
-shape = SubResource( 3 )
+shape = SubResource( 21 )
 
 [node name="Platform3" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
 position = Vector2( -541.5, 171.5 )

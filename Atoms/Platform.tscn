@@ -50,8 +50,8 @@ margin_right = 40.0
 margin_bottom = 14.0
 
 [node name="TempSprite" parent="." instance=ExtResource( 3 )]
-position = Vector2( 21, -24 )
-scale = Vector2( 0.095, 0.095 )
+position = Vector2( 21, -18.826 )
+scale = Vector2( 0.0735547, 0.0735547 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

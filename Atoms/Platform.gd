@@ -16,8 +16,6 @@ func update_shader_for_temperature():
 	$NinePatchRect.material.set_shader_param("temperature_value", temperature)
 	$TempSprite.material.set_shader_param("temperature_value", temperature);
 
-	print($TempSprite.material.get_shader_param("temperature_value"))
-	
 func set_temp(temp, delay):
 	time_factor = 1 / delay * (1 if target_temp > temperature else -1)
 	target_temp = temp

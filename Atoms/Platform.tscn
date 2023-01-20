@@ -30,38 +30,38 @@ shader_param/red_color = Color( 1, 0, 0, 1 )
 shader_param/blue_color = Color( 0.380392, 0.941176, 1, 1 )
 shader_param/platform_sprite = ExtResource( 2 )
 
-[sub_resource type="Gradient" id=18]
+[sub_resource type="Gradient" id=24]
 offsets = PoolRealArray( 0.212903, 0.341935, 0.535484 )
 colors = PoolColorArray( 0, 0.0470588, 0.164706, 0, 0, 0.152138, 0.539063, 1, 1, 1, 1, 1 )
 
-[sub_resource type="GradientTexture2D" id=19]
-gradient = SubResource( 18 )
+[sub_resource type="GradientTexture2D" id=25]
+gradient = SubResource( 24 )
 
-[sub_resource type="Gradient" id=16]
-offsets = PoolRealArray( 0.0387097, 0.109677, 0.277419, 0.477419 )
-colors = PoolColorArray( 0, 0, 0, 0, 0.385742, 0.00904083, 0.00904083, 1, 1, 0.926811, 0.292969, 1, 1, 1, 1, 1 )
+[sub_resource type="Gradient" id=20]
+offsets = PoolRealArray( 0, 0.522581 )
+colors = PoolColorArray( 1, 1, 1, 0, 0.501961, 0.501961, 0.501961, 1 )
 
-[sub_resource type="GradientTexture2D" id=17]
-gradient = SubResource( 16 )
+[sub_resource type="GradientTexture2D" id=26]
+gradient = SubResource( 20 )
 width = 128
 height = 128
 
-[sub_resource type="OpenSimplexNoise" id=3]
+[sub_resource type="OpenSimplexNoise" id=27]
 
-[sub_resource type="NoiseTexture" id=12]
+[sub_resource type="NoiseTexture" id=28]
 seamless = true
-noise = SubResource( 3 )
+noise = SubResource( 27 )
 
 [sub_resource type="ShaderMaterial" id=14]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
-shader_param/temperature_value = 1.0
+shader_param/temperature_value = -0.2
 shader_param/v_local_position = Vector2( 0, 0 )
 shader_param/scroll = Vector2( 0.12, 0.15 )
 shader_param/scroll2 = Vector2( -0.2, 0.2 )
-shader_param/noiseTexture = SubResource( 12 )
-shader_param/heatTexture = SubResource( 17 )
-shader_param/coldTexture = SubResource( 19 )
+shader_param/noiseTexture = SubResource( 28 )
+shader_param/heatTexture = SubResource( 26 )
+shader_param/coldTexture = SubResource( 25 )
 
 [sub_resource type="RectangleShape2D" id=15]
 extents = Vector2( 0.979157, 0.0281144 )
@@ -80,17 +80,12 @@ texture = ExtResource( 2 )
 patch_margin_left = 21
 patch_margin_right = 21
 
-[node name="Label" type="Label" parent="."]
-margin_right = 40.0
-margin_bottom = 14.0
-
 [node name="TempSprite" parent="." instance=ExtResource( 3 )]
 material = SubResource( 14 )
 position = Vector2( 20, -46.829 )
 scale = Vector2( 0.081, 0.183 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 21.5, 5.5 )
 scale = Vector2( 18.8938, -195.629 )
 shape = SubResource( 15 )

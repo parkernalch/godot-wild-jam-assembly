@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Assets/vector/Asset 1.svg" type="Texture" id=1]
 [ext_resource path="res://Atoms/Spout/Spout.tscn" type="PackedScene" id=2]
@@ -15,7 +15,9 @@
 [ext_resource path="res://Platformer/Character/trail.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Assets/vector/Asset 7.svg" type="Texture" id=14]
 [ext_resource path="res://Platformer/trail_material.tres" type="Material" id=15]
+[ext_resource path="res://Atoms/Timer/Timer.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Atoms/TemperatureAreas/temp_shader.shader" type="Shader" id=17]
+[ext_resource path="res://Scenes/GameCamera.gd" type="Script" id=18]
 
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
@@ -114,6 +116,64 @@ shader_param/scroll = Vector2( 0.12, 0.15 )
 shader_param/scroll2 = Vector2( -0.2, 0.2 )
 shader_param/noiseTexture = SubResource( 12 )
 
+[sub_resource type="Shader" id=9]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform float temperature_value : hint_range(-1., 1.) = 0.0;
+uniform vec4 red_color: hint_color;
+uniform vec4 blue_color: hint_color;
+uniform sampler2D platform_sprite;
+
+void fragment() {
+	vec4 tex_color = texture(platform_sprite, UV);
+	vec4 red_amt = mix(vec4(1.), red_color, temperature_value);
+	vec4 blue_amt = mix(vec4(1.), blue_color, 0.- temperature_value);
+	
+	COLOR = mix(blue_amt, red_amt, (temperature_value + 1.)/2.) * tex_color;
+}"
+
+[sub_resource type="ShaderMaterial" id=23]
+resource_local_to_scene = true
+shader = SubResource( 9 )
+shader_param/temperature_value = 0.0
+shader_param/red_color = Color( 1, 0, 0, 1 )
+shader_param/blue_color = Color( 0.380392, 0.941176, 1, 1 )
+shader_param/platform_sprite = ExtResource( 14 )
+
+[sub_resource type="Gradient" id=24]
+offsets = PoolRealArray( 0.212903, 0.341935, 0.535484 )
+colors = PoolColorArray( 0, 0.0470588, 0.164706, 0, 0, 0.152138, 0.539063, 1, 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture2D" id=25]
+gradient = SubResource( 24 )
+
+[sub_resource type="Gradient" id=20]
+offsets = PoolRealArray( 0, 0.522581 )
+colors = PoolColorArray( 1, 1, 1, 0, 0.501961, 0.501961, 0.501961, 1 )
+
+[sub_resource type="GradientTexture2D" id=26]
+gradient = SubResource( 20 )
+width = 128
+height = 128
+
+[sub_resource type="OpenSimplexNoise" id=27]
+
+[sub_resource type="NoiseTexture" id=28]
+seamless = true
+noise = SubResource( 27 )
+
+[sub_resource type="ShaderMaterial" id=29]
+resource_local_to_scene = true
+shader = ExtResource( 17 )
+shader_param/temperature_value = -0.2
+shader_param/v_local_position = Vector2( 0, 0 )
+shader_param/scroll = Vector2( 0.12, 0.15 )
+shader_param/scroll2 = Vector2( -0.2, 0.2 )
+shader_param/noiseTexture = SubResource( 28 )
+shader_param/heatTexture = SubResource( 26 )
+shader_param/coldTexture = SubResource( 25 )
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Background" type="Node2D" parent="."]
@@ -158,7 +218,7 @@ margin_top = -24.0
 margin_right = 757.0
 margin_bottom = 23.0
 
-[node name="TempSprite" parent="Foreground/Game/Walls/Platform" index="2"]
+[node name="TempSprite" parent="Foreground/Game/Walls/Platform" index="1"]
 visible = false
 material = SubResource( 22 )
 
@@ -177,7 +237,7 @@ margin_top = -26.0
 margin_right = 756.0
 margin_bottom = 23.0
 
-[node name="TempSprite" parent="Foreground/Game/Walls/Platform2" index="2"]
+[node name="TempSprite" parent="Foreground/Game/Walls/Platform2" index="1"]
 visible = false
 material = SubResource( 16 )
 
@@ -197,7 +257,7 @@ margin_top = -27.0
 margin_right = 442.0
 margin_bottom = 22.0
 
-[node name="TempSprite" parent="Foreground/Game/Walls/Platform3" index="2"]
+[node name="TempSprite" parent="Foreground/Game/Walls/Platform3" index="1"]
 visible = false
 material = SubResource( 18 )
 
@@ -217,7 +277,7 @@ margin_top = -21.0
 margin_right = 442.0
 margin_bottom = 24.0
 
-[node name="TempSprite" parent="Foreground/Game/Walls/Platform4" index="2"]
+[node name="TempSprite" parent="Foreground/Game/Walls/Platform4" index="1"]
 visible = false
 material = SubResource( 19 )
 
@@ -231,6 +291,12 @@ shape = SubResource( 7 )
 position = Vector2( -692.5, -167.5 )
 scale = Vector2( 6, 4 )
 temperature = 0.005
+
+[node name="NinePatchRect" parent="Foreground/Game/Platforms/Platform" index="0"]
+material = SubResource( 23 )
+
+[node name="TempSprite" parent="Foreground/Game/Platforms/Platform" index="1"]
+material = SubResource( 29 )
 
 [node name="Platform2" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
 position = Vector2( -46.5, 18.5 )
@@ -285,6 +351,14 @@ pickup_type = "milk"
 [node name="Player" parent="Foreground/Game" instance=ExtResource( 6 )]
 position = Vector2( -595.5, -320.5 )
 
+[node name="StageTimer" parent="Foreground/Game" instance=ExtResource( 16 )]
+anchor_left = 0.0
+anchor_right = 1.0
+margin_left = 2.5
+margin_top = -388.5
+margin_right = 2.5
+margin_bottom = -388.5
+
 [node name="Spout" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1256, 902 )
 
@@ -299,10 +373,11 @@ length = 50
 target_path = NodePath("../Foreground/Game/Player")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 1132, 374 )
-offset = Vector2( 1.209, 45 )
+anchor_mode = 0
 current = true
-zoom = Vector2( 0.78, 0.78 )
+script = ExtResource( 18 )
+in_game_offset = Vector2( 390, 0 )
+in_game_zoom = Vector2( 0.78, 0.78 )
 
 [connection signal="trail_end" from="Foreground/Game/Player" to="trail" method="_stop_emitting"]
 [connection signal="trail_start" from="Foreground/Game/Player" to="trail" method="_add_trail_point"]
@@ -311,4 +386,5 @@ zoom = Vector2( 0.78, 0.78 )
 [editable path="Foreground/Game/Walls/Platform2"]
 [editable path="Foreground/Game/Walls/Platform3"]
 [editable path="Foreground/Game/Walls/Platform4"]
+[editable path="Foreground/Game/Platforms/Platform"]
 [editable path="Spout"]

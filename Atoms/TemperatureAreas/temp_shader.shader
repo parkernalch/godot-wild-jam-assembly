@@ -18,8 +18,8 @@ void vertex() {
 }
 
 void fragment() {
-    float noise = texture(TEXTURE, UV + scroll * TIME).x;
-	float noise2 = texture(noiseTexture, UV + scroll2 * TIME).x;
+    float noise = texture(TEXTURE, UV + scroll * TIME * sign(temperature_value)).x;
+	float noise2 = texture(noiseTexture, UV + scroll2 * TIME * sign(temperature_value) * temperature_value).x;
 	float energy = noise * noise2 - (1.0 - UV.y);
 
 	vec4 heatColor = texture(heatTexture, vec2(energy));

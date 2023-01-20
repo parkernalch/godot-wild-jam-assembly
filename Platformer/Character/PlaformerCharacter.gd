@@ -28,6 +28,7 @@ var base_gravity = 9.8
 var cached_velocity = Vector2.ZERO
 var velocity = Vector2.ZERO
 var top_speed
+var temp_speed_modifier = 1
 var horizontal_input = 0
 var time_since_last_move = 0
 
@@ -102,9 +103,9 @@ func set_resource_derived_properties():
 
 func precalculateAcceleration(accel_time, decel_time):
 	# calculate acceleration required to reach full speed in t_to_speed
-	var acceleration = 2 * top_speed / pow(accel_time , 2)
+	var acceleration = 2 * ( top_speed * temp_speed_modifier) / pow(accel_time , 2)
 	# calculate deceleration required to reach full stop in t_to_stop
-	var deceleration = 2 * top_speed * decel_time / pow(decel_time, 2)
+	var deceleration = 2 * (top_speed * temp_speed_modifier) * decel_time / pow(decel_time, 2)
 	return Accel.new(acceleration, deceleration)
 
 func _process(delta):
@@ -115,7 +116,7 @@ func _process(delta):
 	jump_released = Input.is_action_just_released("jump")
 	
 func apply_horizontal_forces(delta, forces):
-	var isNearTopSpeed = abs(velocity.x) >= top_speed * 0.95
+	var isNearTopSpeed = abs(velocity.x) >= top_speed * 0.95 * temp_speed_modifier
 	if abs(horizontal_input) == 0:
 		# prevents float at slow speeds
 		if abs(velocity.x) < top_speed * 0.1:
@@ -132,7 +133,7 @@ func apply_horizontal_forces(delta, forces):
 		v += forces.acceleration * delta * horizontal_input
 		if isNearTopSpeed:
 			# allows for quick turnraound at top speeds
-			return top_speed * sign(horizontal_input)
+			return top_speed * sign(horizontal_input) * temp_speed_modifier
 		# apply acceleration
 		return v
 	return velocity.x
@@ -211,9 +212,9 @@ func _physics_process(delta):
 
 	if is_grounded && abs(velocity.x) > 0:
 		emit_signal("trail_start", $trail_pos.global_position)
-		health -= heat_amount;
-		if (int(health) * 10) % 100 == 0:
-			recalculateAccelerationFromHealth(health)
+#		health -= heat_amount;
+#		if (int(health) * 10) % 100 == 0:
+#			recalculateAccelerationFromHealth(health)
 		if health <= 0:
 			print("dead X_X")
 			set_physics_process(false)
@@ -241,8 +242,8 @@ func _physics_process(delta):
 
 func recalculateAccelerationFromHealth(health_val):
 	grounded_forces = precalculateAcceleration(
-		data.move_acceleration_time + lerp(1, 0, health_val / 100),
-		data.move_deceleration_time + lerp(1, 0, health_val / 100)
+		data.move_acceleration_time + lerp(1, 0, health_val / 2),
+		data.move_deceleration_time + lerp(1, 0, health_val / 2)
 	)
 
 func apply_heat_differential(delta):
@@ -268,6 +269,10 @@ func apply_heat_differential(delta):
 		pass
 	health = clamp(health - effective_temp, 0, 100)
 	health_material.set_shader_param("health",health/max_health);
+	if temp_speed_modifier != effective_temp + 1:
+		temp_speed_modifier = max(effective_temp + 1, 0.15)
+#		recalculateAccelerationFromHealth(temp_speed_modifier)
+	print(temp_speed_modifier)
 	if health < 0:
 		set_process(false)
 		set_physics_process(false)

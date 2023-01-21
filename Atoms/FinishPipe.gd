@@ -3,6 +3,8 @@ extends StaticBody2D
 onready var player_detector: Area2D = $EntryArea
 onready var particles: CPUParticles2D = $CPUParticles2D
 
+signal check_item_count()
+
 func _ready():
 	player_detector.connect("body_entered", self, "_on_player_entered")
 	Globals.pipe_location = global_position
@@ -20,3 +22,4 @@ func _on_player_entered(body):
 
 func _on_pickup_entered(_type):
 	play_particles()
+	emit_signal("check_item_count")

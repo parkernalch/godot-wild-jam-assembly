@@ -155,10 +155,13 @@ func apply_vertical_forces(delta):
 	return v
 	
 func _physics_process(delta):
-	apply_heat_differential(delta)
 	var was_airborne = not is_grounded
 	var was_stationary = time_since_last_move > 0.5 and is_grounded
 	is_grounded = cast.is_colliding() or cast2.is_colliding()
+	var left_wall = left_cast.get_collider()
+	var right_wall = right_cast.get_collider()
+	if is_grounded || left_wall is Platform || right_wall is Platform:
+		apply_heat_differential(delta)
 	
 	var is_on_left_wall = left_cast.is_colliding() and horizontal_input < 0
 	var is_on_right_wall = right_cast.is_colliding() and horizontal_input > 0

@@ -76,7 +76,7 @@ color = Color( 1, 0.054902, 0.654902, 0.407843 )
 [node name="Platforms" type="Node2D" parent="Foreground/Game"]
 
 [node name="CustomPlatform" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
-position = Vector2( -621.5, 0 )
+position = Vector2( -614.5, 2.5 )
 size = Vector2( 268, 39 )
 
 [node name="CustomPlatform2" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
@@ -143,6 +143,7 @@ margin_left = -442.5
 margin_top = -417.5
 margin_right = -402.5
 margin_bottom = -377.5
+pickups = NodePath("../Interactables/Pickups")
 
 [node name="Spout" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1256, 902 )

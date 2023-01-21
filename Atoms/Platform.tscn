@@ -1,91 +1,56 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Atoms/Platform.gd" type="Script" id=1]
-[ext_resource path="res://Assets/vector/Asset 7.svg" type="Texture" id=2]
+[ext_resource path="res://platform_theme.tres" type="Theme" id=2]
 [ext_resource path="res://Atoms/temperatureEmitter.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Atoms/TemperatureAreas/temp_shader.shader" type="Shader" id=4]
+[ext_resource path="res://addons/custom_platform/custom_platform.gd" type="Script" id=5]
 
-[sub_resource type="Shader" id=9]
-code = "shader_type canvas_item;
-render_mode unshaded;
-
-uniform float temperature_value : hint_range(-1., 1.) = 0.0;
-uniform vec4 red_color: hint_color;
-uniform vec4 blue_color: hint_color;
-uniform sampler2D platform_sprite;
-
-void fragment() {
-	vec4 tex_color = texture(platform_sprite, UV);
-	vec4 red_amt = mix(vec4(1.), red_color, temperature_value);
-	vec4 blue_amt = mix(vec4(1.), blue_color, 0.- temperature_value);
-	
-	COLOR = mix(blue_amt, red_amt, (temperature_value + 1.)/2.) * tex_color;
-}"
-
-[sub_resource type="ShaderMaterial" id=1]
-resource_local_to_scene = true
-shader = SubResource( 9 )
-shader_param/temperature_value = 0.0
-shader_param/red_color = Color( 1, 0, 0, 1 )
-shader_param/blue_color = Color( 0.380392, 0.941176, 1, 1 )
-shader_param/platform_sprite = ExtResource( 2 )
-
-[sub_resource type="Gradient" id=24]
+[sub_resource type="Gradient" id=42]
 offsets = PoolRealArray( 0.212903, 0.341935, 0.535484 )
 colors = PoolColorArray( 0, 0.0470588, 0.164706, 0, 0, 0.152138, 0.539063, 1, 1, 1, 1, 1 )
 
-[sub_resource type="GradientTexture2D" id=25]
-gradient = SubResource( 24 )
+[sub_resource type="GradientTexture2D" id=43]
+gradient = SubResource( 42 )
 
-[sub_resource type="Gradient" id=20]
+[sub_resource type="Gradient" id=44]
 offsets = PoolRealArray( 0, 0.522581 )
 colors = PoolColorArray( 1, 1, 1, 0, 0.501961, 0.501961, 0.501961, 1 )
 
-[sub_resource type="GradientTexture2D" id=26]
-gradient = SubResource( 20 )
+[sub_resource type="GradientTexture2D" id=45]
+gradient = SubResource( 44 )
 width = 128
 height = 128
 
-[sub_resource type="OpenSimplexNoise" id=27]
+[sub_resource type="OpenSimplexNoise" id=46]
 
-[sub_resource type="NoiseTexture" id=28]
+[sub_resource type="NoiseTexture" id=47]
 seamless = true
-noise = SubResource( 27 )
+noise = SubResource( 46 )
 
 [sub_resource type="ShaderMaterial" id=14]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
-shader_param/temperature_value = -0.2
+shader_param/temperature_value = 0.442
 shader_param/v_local_position = Vector2( 0, 0 )
 shader_param/scroll = Vector2( 0.12, 0.15 )
 shader_param/scroll2 = Vector2( -0.2, 0.2 )
-shader_param/noiseTexture = SubResource( 28 )
-shader_param/heatTexture = SubResource( 26 )
-shader_param/coldTexture = SubResource( 25 )
+shader_param/noiseTexture = SubResource( 47 )
+shader_param/heatTexture = SubResource( 45 )
+shader_param/coldTexture = SubResource( 43 )
 
-[sub_resource type="RectangleShape2D" id=15]
-extents = Vector2( 0.979157, 0.0281144 )
+[node name="CustomPlatform" type="StaticBody2D"]
+script = ExtResource( 5 )
+red_color = Color( 0.792157, 0.223529, 0.223529, 1 )
+blue_color = Color( 0.419608, 0.705882, 0.858824, 1 )
+base_color = Color( 0.411765, 0.458824, 0.580392, 1 )
 
-[node name="Platform" type="StaticBody2D"]
-self_modulate = Color( 0.411765, 0.458824, 0.580392, 1 )
-position = Vector2( 3, 0 )
-script = ExtResource( 1 )
-temperature = 0.442
-
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
-material = SubResource( 1 )
-margin_right = 42.0
-margin_bottom = 11.0
-texture = ExtResource( 2 )
-patch_margin_left = 21
-patch_margin_right = 21
+[node name="Panel" type="Panel" parent="."]
+visible = false
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+theme = ExtResource( 2 )
 
 [node name="TempSprite" parent="." instance=ExtResource( 3 )]
 material = SubResource( 14 )
-position = Vector2( 20, -46.829 )
-scale = Vector2( 0.081, 0.183 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 21.5, 5.5 )
-scale = Vector2( 18.8938, -195.629 )
-shape = SubResource( 15 )

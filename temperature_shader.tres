@@ -10,7 +10,7 @@ uniform vec4 blue_color: hint_color;
 uniform sampler2D platform_sprite;
 
 void fragment() {
-	vec4 tex_color = texture(platform_sprite, UV);
+	vec4 tex_color = texture(TEXTURE, UV);
 	vec4 red_amt = mix(vec4(1.), red_color, temperature_value);
 	vec4 blue_amt = mix(vec4(1.), blue_color, 0.- temperature_value);
 	

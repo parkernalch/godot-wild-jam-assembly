@@ -272,7 +272,6 @@ func apply_heat_differential(delta):
 	if temp_speed_modifier != effective_temp + 1:
 		temp_speed_modifier = max(effective_temp + 1, 0.15)
 #		recalculateAccelerationFromHealth(temp_speed_modifier)
-	print(temp_speed_modifier)
 	if health < 0:
 		set_process(false)
 		set_physics_process(false)

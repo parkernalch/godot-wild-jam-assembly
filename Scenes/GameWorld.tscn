@@ -74,16 +74,26 @@ color = Color( 1, 0.054902, 0.654902, 0.407843 )
 
 [node name="CustomPlatform" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
 position = Vector2( -621.5, 0 )
-temperature = -1.0
 size = Vector2( 268, 39 )
 
 [node name="CustomPlatform2" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
-position = Vector2( -1.5, 1.5 )
+position = Vector2( -29.5, 2.5 )
 size = Vector2( 268, 39 )
 
 [node name="CustomPlatform3" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
-position = Vector2( 556.5, 1.5 )
+position = Vector2( 556.5, 2.5 )
 temperature = 1.0
+size = Vector2( 268, 39 )
+
+[node name="CustomPlatform4" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
+position = Vector2( 265.5, 2.5 )
+base_color = Color( 0.411765, 0.458824, 0.580392, 1 )
+size = Vector2( 300, 39 )
+color = Color( 0.168627, 0.0313726, 0.117647, 1 )
+
+[node name="CustomPlatform5" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
+position = Vector2( -314.5, 2.5 )
+temperature = -0.3
 size = Vector2( 268, 39 )
 
 [node name="Interactables" type="Node2D" parent="Foreground/Game"]

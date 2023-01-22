@@ -8,3 +8,5 @@ signal target_set(position)
 
 # Game Actions
 signal pickup_entered_pipe(type)
+signal pause()
+signal resume()

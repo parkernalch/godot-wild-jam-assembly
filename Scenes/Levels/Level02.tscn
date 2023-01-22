@@ -1,0 +1,87 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Scenes/Game/Game.gd" type="Script" id=1]
+[ext_resource path="res://Platformer/Character/PlaformerCharacter.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Atoms/OrderDisplay/OrderDisplay.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Atoms/Pickup/Pickup.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Atoms/Platform.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Atoms/Timer/Timer.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Atoms/FinishPipe.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Assets/vector/Asset 1.svg" type="Texture" id=8]
+[ext_resource path="res://Assets/px.jpg" type="Texture" id=10]
+[ext_resource path="res://Assets/vector/Asset 5.svg" type="Texture" id=12]
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Background" type="Sprite" parent="."]
+self_modulate = Color( 0.87451, 0.913725, 0.960784, 1 )
+position = Vector2( -32.4999, 4.50001 )
+scale = Vector2( 1408, 704 )
+texture = ExtResource( 10 )
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="CustomPlatform2" parent="Walls" instance=ExtResource( 5 )]
+position = Vector2( -32, 352 )
+size = Vector2( 1440, 32 )
+color = Color( 1, 0.054902, 0.654902, 0.407843 )
+
+[node name="CustomPlatform3" parent="Walls" instance=ExtResource( 5 )]
+position = Vector2( -32, -352 )
+size = Vector2( 1440, 32 )
+color = Color( 1, 0.054902, 0.654902, 0.407843 )
+
+[node name="CustomPlatform4" parent="Walls" instance=ExtResource( 5 )]
+position = Vector2( -736, 0 )
+size = Vector2( 32, 736 )
+color = Color( 1, 0.054902, 0.654902, 0.407843 )
+
+[node name="CustomPlatform5" parent="Walls" instance=ExtResource( 5 )]
+position = Vector2( 672, 0 )
+size = Vector2( 32, 736 )
+color = Color( 1, 0.054902, 0.654902, 0.407843 )
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="CustomPlatform6" parent="Platforms" instance=ExtResource( 5 )]
+position = Vector2( 0, 80 )
+size = Vector2( 32, 576 )
+color = Color( 0.168627, 0.0313726, 0.117647, 1 )
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="FinishPipe" parent="Interactables" instance=ExtResource( 7 )]
+position = Vector2( 576, 336 )
+
+[node name="Pickups" type="Node2D" parent="Interactables"]
+position = Vector2( 0.5, 0.5 )
+
+[node name="MilkPickup" parent="Interactables/Pickups" instance=ExtResource( 4 )]
+position = Vector2( -0.5, -272.5 )
+pickup_sprite = ExtResource( 12 )
+pickup_type = "milk"
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( -592.5, -299.5 )
+
+[node name="StageTimer" parent="." instance=ExtResource( 6 )]
+anchor_right = 1.0
+margin_left = 2.5
+margin_top = -388.5
+margin_right = 2.5
+margin_bottom = -388.5
+
+[node name="OrderDisplay" parent="." instance=ExtResource( 3 )]
+margin_left = -442.5
+margin_top = -417.5
+margin_right = -402.5
+margin_bottom = -377.5
+pickups = NodePath("../Interactables/Pickups")
+
+[node name="EntryPipe" type="Sprite" parent="."]
+position = Vector2( -592, -336 )
+scale = Vector2( 1, -1 )
+texture = ExtResource( 8 )
+
+[connection signal="picked_up" from="Interactables/Pickups/MilkPickup" to="OrderDisplay" method="_on_pickup"]

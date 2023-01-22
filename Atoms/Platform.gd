@@ -33,7 +33,7 @@ func _ready():
 	update_shader_for_temperature()
 	
 func set_collider_dimensions(rect_size, offset):
-	if $CollisionShape2D:
+	if get_node("CollisionShape2D"):
 		$CollisionShape2D.queue_free()
 	var collider: CollisionShape2D = CollisionShape2D.new()
 	add_child(collider)

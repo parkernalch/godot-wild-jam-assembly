@@ -11,16 +11,12 @@ func spray_liquid(type):
 	$SpoutSprite.stretch(0.3, 1.0)
 	match type:
 		"coffee":
-			print("playing spray_coffee")
 			$AnimationPlayer.play("spray_coffee")
 		"soda":
-			print("playing spray_soda")
 			$AnimationPlayer.play("spray_soda")
 		"milk":
-			print("playing spray_milk")
 			$AnimationPlayer.play("spray_milk")
 		"ice":
-			print("restarting ice particles")
 			$IceParticles.restart()
 		_:
 			print("doing nothing for type: " + type)

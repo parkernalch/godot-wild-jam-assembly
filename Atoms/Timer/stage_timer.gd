@@ -5,9 +5,17 @@ onready var label = $NinePatchRect/Label
 
 func _ready():
 	EventBus.connect("level_started", self, "_on_level_started")
+	EventBus.connect("pause", self, "_on_pause")
+	EventBus.connect("resume", self, "_on_resume")
 	set_process(false)
 	_on_level_started()
 	
+func _on_pause():
+	set_process(false)
+	
+func _on_resume():
+	set_process(true)	
+
 func _on_level_started():
 	set_process(true)
 	pass

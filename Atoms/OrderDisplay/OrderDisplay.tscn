@@ -3,7 +3,7 @@
 [ext_resource path="res://Atoms/OrderDisplay/OrderDisplay.gd" type="Script" id=1]
 [ext_resource path="res://Assets/vector/Asset 7.svg" type="Texture" id=2]
 [ext_resource path="res://Assets/vector/Asset 3.svg" type="Texture" id=3]
-[ext_resource path="res://Assets/vector/Asset 2.svg" type="Texture" id=4]
+[ext_resource path="res://Assets/vector/Asset 11.svg" type="Texture" id=4]
 [ext_resource path="res://Assets/vector/Asset 4.svg" type="Texture" id=5]
 [ext_resource path="res://Assets/vector/Asset 5.svg" type="Texture" id=6]
 
@@ -11,6 +11,10 @@
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 1 )
+soda_sprite = ExtResource( 3 )
+coffee_sprite = ExtResource( 5 )
+ice_sprite = ExtResource( 4 )
+milk_sprite = ExtResource( 6 )
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 margin_right = 300.0
@@ -27,35 +31,7 @@ margin_bottom = 50.0
 alignment = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 4.0
+margin_top = 50.0
 margin_right = 300.0
 margin_bottom = 50.0
 alignment = 1
-
-[node name="soda" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
-margin_left = 87.0
-margin_right = 118.0
-margin_bottom = 46.0
-texture = ExtResource( 3 )
-stretch_mode = 4
-
-[node name="coffee" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
-margin_left = 122.0
-margin_right = 157.0
-margin_bottom = 46.0
-texture = ExtResource( 5 )
-stretch_mode = 6
-
-[node name="ice" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
-margin_left = 161.0
-margin_right = 190.0
-margin_bottom = 46.0
-texture = ExtResource( 4 )
-stretch_mode = 4
-
-[node name="milk" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
-margin_left = 194.0
-margin_right = 213.0
-margin_bottom = 46.0
-texture = ExtResource( 6 )
-stretch_mode = 4

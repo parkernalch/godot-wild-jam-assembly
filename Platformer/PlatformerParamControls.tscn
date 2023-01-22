@@ -25,16 +25,16 @@ script = ExtResource( 3 )
 [node name="VBox" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 917.0
-margin_bottom = 493.0
+margin_right = 1813.0
+margin_bottom = 973.0
 
 [node name="HeaderHSplit" type="HSplitContainer" parent="VBox"]
-margin_right = 910.0
+margin_right = 1806.0
 margin_bottom = 52.0
 split_offset = 200
 
 [node name="Title" type="Label" parent="VBox/HeaderHSplit"]
-margin_right = 910.0
+margin_right = 1806.0
 margin_bottom = 52.0
 custom_fonts/font = SubResource( 1 )
 text = "Platformer Controls"
@@ -50,13 +50,12 @@ script = ExtResource( 2 )
 
 [node name="TabContainer" type="TabContainer" parent="VBox"]
 margin_top = 56.0
-margin_right = 910.0
-margin_bottom = 486.0
+margin_right = 1806.0
+margin_bottom = 966.0
 size_flags_vertical = 3
 tab_align = 0
 
 [node name="Jump" type="HSplitContainer" parent="VBox/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -67,7 +66,7 @@ split_offset = 200
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBox/TabContainer/Jump"]
 margin_right = 373.0
-margin_bottom = 394.0
+margin_bottom = 874.0
 scroll_horizontal_enabled = false
 
 [node name="Buttons" type="GridContainer" parent="VBox/TabContainer/Jump/ScrollContainer"]
@@ -206,8 +205,8 @@ size_flags_horizontal = 3
 
 [node name="Panel" type="Panel" parent="VBox/TabContainer/Jump"]
 margin_left = 385.0
-margin_right = 902.0
-margin_bottom = 394.0
+margin_right = 1798.0
+margin_bottom = 874.0
 size_flags_horizontal = 3
 
 [node name="ViewportContainer" type="ViewportContainer" parent="VBox/TabContainer/Jump/Panel"]
@@ -217,12 +216,13 @@ anchor_bottom = 1.0
 [node name="Viewport" type="Viewport" parent="VBox/TabContainer/Jump/Panel/ViewportContainer"]
 size = Vector2( 300, 300 )
 handle_input_locally = false
-render_target_update_mode = 0
+render_target_update_mode = 3
 
 [node name="Path2D" type="Path2D" parent="VBox/TabContainer/Jump/Panel/ViewportContainer/Viewport"]
 curve = SubResource( 2 )
 
 [node name="Move" type="HSplitContainer" parent="VBox/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -233,7 +233,7 @@ split_offset = 200
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBox/TabContainer/Move"]
 margin_right = 344.0
-margin_bottom = 394.0
+margin_bottom = 874.0
 scroll_horizontal_enabled = false
 
 [node name="Buttons" type="GridContainer" parent="VBox/TabContainer/Move/ScrollContainer"]
@@ -282,6 +282,6 @@ size_flags_horizontal = 3
 
 [node name="Panel" type="Panel" parent="VBox/TabContainer/Move"]
 margin_left = 356.0
-margin_right = 902.0
-margin_bottom = 394.0
+margin_right = 1798.0
+margin_bottom = 874.0
 size_flags_horizontal = 3

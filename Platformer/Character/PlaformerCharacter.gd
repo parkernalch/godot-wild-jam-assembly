@@ -20,6 +20,8 @@ export var size_per_unit = 32
 export var platformer_data : Resource
 var data : PlatformerData
 
+var respawn_location = Vector2.ZERO
+
 # Forces
 var grounded_forces
 var airborne_forces
@@ -63,6 +65,8 @@ func _ready():
 	health_material = $AnimatedSprite.get_material();
 	health_material.set_shader_param("health",health/max_health);
 	EventBus.connect("platformer_resource_updated", self, "_on_resource_updated")
+	EventBus.connect("pause", self, "_on_pause")
+	EventBus.connect("resume", self, "_on_resume")
 	coyote_timer.connect("timeout", self, "_on_coyote_time_expired")
 
 	if data.wall_drag_decay_time > 0:
@@ -71,6 +75,16 @@ func _ready():
 	$WallJumpControlTimer.wait_time = data.wall_jump_control_timeout
 	$WallJumpControlTimer.one_shot = true
 	set_resource_derived_properties()
+	yield(get_tree(), "idle_frame")
+	respawn_location = global_position
+
+func _on_pause():
+	set_process(false)
+	set_physics_process(false)
+
+func _on_resume():
+	set_process(true)
+	set_physics_process(true)
 
 func _on_coyote_time_expired():
 	if jumps_remaining > 0:
@@ -219,9 +233,7 @@ func _physics_process(delta):
 #		if (int(health) * 10) % 100 == 0:
 #			recalculateAccelerationFromHealth(health)
 		if health <= 0:
-			print("dead X_X")
-			set_physics_process(false)
-			set_process(false)
+			respawn()
 	else:
 		emit_signal("trail_end")
 
@@ -242,6 +254,17 @@ func _physics_process(delta):
 		time_since_last_move += delta
 	else:
 		time_since_last_move = 0
+
+func respawn():
+	print("respawning")
+	set_physics_process(false)
+	set_process(false)
+	global_position = respawn_location
+	health = 100
+	health_material = $AnimatedSprite.get_material();
+	health_material.set_shader_param("health",health/max_health);
+	set_physics_process(true)
+	set_process(true)
 
 func recalculateAccelerationFromHealth(health_val):
 	grounded_forces = precalculateAcceleration(
@@ -283,7 +306,5 @@ func apply_heat_differential(delta):
 	if temp_speed_modifier != effective_temp + 1:
 		temp_speed_modifier = max(effective_temp + 1, 0.15)
 #		recalculateAccelerationFromHealth(temp_speed_modifier)
-	if health < 0:
-		set_process(false)
-		set_physics_process(false)
-		print("dead X_X")
+	if health <= 0:
+		respawn()

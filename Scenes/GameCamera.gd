@@ -25,6 +25,8 @@ func smooth_zoom(target_offset, target_zoom, duration):
 		zoom = lerp(i_zoom, target_zoom, t / duration)
 		offset = lerp(i_offset, target_offset, t / duration)
 		t += 0.01
+	zoom = target_zoom
+	offset = target_offset
 
 func _unhandled_input(event):
 	if event is InputEventKey:

@@ -1,12 +1,14 @@
 extends Node
 
-var current_level = 0
+var current_level = -1
 var pipe_location = Vector2.ZERO
 
 var levels = []
 
 func get_levels():
-	var path = "Scenes/"
+	if levels.size() >= 1:
+		return
+	var path = "Scenes/Levels/"
 	var dir = Directory.new()
 	dir.open(path)
 	dir.list_dir_begin()
@@ -18,7 +20,11 @@ func get_levels():
 		elif ".tscn" in file_name:
 			levels.append(path + file_name)
 	dir.list_dir_end()
+	levels.sort()
+	print(levels)
 	
 func next_level():
 	current_level += 1
+	if current_level >= levels.size() - 1:
+		return
 	get_tree().change_scene(levels[current_level])

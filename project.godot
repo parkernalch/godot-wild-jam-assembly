@@ -57,7 +57,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Godot Wild Assembly"
-run/main_scene="res://Scenes/GameWorld.tscn"
+run/main_scene="res://Scenes/TitleScene.tscn"
 config/icon="res://icon.png"
 
 [autoload]

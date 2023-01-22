@@ -1,7 +1,7 @@
 extends Node2D
 
 var pickups = []
-signal ready_to_proceed()
+#signal ready_to_proceed()
 signal game_loaded()
 
 func _ready():
@@ -16,7 +16,7 @@ func _ready():
 
 func _on_check_item_count():
 	if pickups.size() == 0:
-		emit_signal("ready_to_proceed")
+		EventBus.emit_signal("ready_to_proceed")
 
 func _on_pickup_picked_up(type):
 	for pickup_instance in pickups:

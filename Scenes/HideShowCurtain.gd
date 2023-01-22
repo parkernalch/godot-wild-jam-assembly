@@ -16,9 +16,11 @@ func _ready():
 func _input(event):
 	if event.is_pressed() and event is InputEventKey:
 		if event.scancode == KEY_ESCAPE:
-			toggle()
+			toggle(false)
+		if event.scancode == KEY_SPACE and is_closed:
+			toggle(true)
 	
-func toggle():
+func toggle(open):
 	if is_animating:
 		return
 	is_animating = true

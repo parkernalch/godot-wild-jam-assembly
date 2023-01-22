@@ -21,9 +21,9 @@ func _ready():
 	yield(get_tree(), "idle_frame")
 	for pickup in pickup_children:
 		var new_rect = TextureRect.new()
-		print("looked up " + str(pickup.pickup_type) + " and found " + str(sprite_lookup[pickup.pickup_type]))
+#		print("looked up " + str(pickup.pickup_type) + " and found " + str(sprite_lookup[pickup.pickup_type]))
 		new_rect.texture = sprite_lookup[pickup.pickup_type]
-		print("Texture: " + str(new_rect.texture))
+#		print("Texture: " + str(new_rect.texture))
 		$VBoxContainer/HBoxContainer.add_child(new_rect)
 		new_rect.visible = true
 	

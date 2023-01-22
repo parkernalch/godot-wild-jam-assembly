@@ -5,8 +5,10 @@ onready var label = $NinePatchRect/Label
 
 func _ready():
 	EventBus.connect("level_started", self, "_on_level_started")
+	EventBus.connect("level_completed", self, "_on_level_completed")
 	EventBus.connect("pause", self, "_on_pause")
 	EventBus.connect("resume", self, "_on_resume")
+	EventBus.connect("ready_to_proceed", self, "_on_level_completed")
 	set_process(false)
 	_on_level_started()
 	
@@ -19,6 +21,10 @@ func _on_resume():
 func _on_level_started():
 	set_process(true)
 	pass
+
+func _on_level_completed():
+	print(elapsed_time)
+	Globals.set_current_stage_time(elapsed_time)
 	
 func set_label():
 	var hr = int(elapsed_time / 3600)

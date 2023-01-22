@@ -11,8 +11,7 @@ const FILE_NAME = "user://game-data.json"
 func _ready():
 	var file = File.new()
 	if file.file_exists(FILE_NAME):
-#		get_tree().change_scene_to(load("res://Scenes/GameWorld.tscn"))
-		pass
+		get_tree().change_scene_to(load("res://Scenes/GameWorld.tscn"))
 	else:
 		print("no saved data found")
 	

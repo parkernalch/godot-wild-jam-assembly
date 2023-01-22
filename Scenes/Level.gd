@@ -9,9 +9,9 @@ onready var game_position
 func _ready():
 	yield(get_tree(), "idle_frame")
 	game_position = game_scene.global_position
-	Globals.get_levels()
+#	Globals.get_levels()
 	levels = Globals.levels
-	$Foreground/Game.connect("ready_to_proceed", self, "_on_next_level_ready")
+	EventBus.connect("ready_to_proceed", self, "_on_next_level_ready")
 	$Foreground/Game.connect("game_loaded", self, "_on_level_loaded")
 	EventBus.emit_signal("pause")
 
@@ -22,16 +22,15 @@ func _on_next_level_ready():
 	level_index += 1
 	if level_index >= levels.size():
 		level_index = 0
-	var next_level_scene = load(levels[level_index]).instance()
-	game_scene.disconnect("ready_to_proceed", self, "_on_next_level_ready")
+	var next_level_scene = levels[level_index].instance()
 	game_scene.disconnect("game_loaded", self, "_on_level_loaded")
 	game_scene.queue_free()
 	$Foreground.add_child(next_level_scene)
 	next_level_scene.global_position = game_position
-	next_level_scene.connect("ready_to_proceed", self, "_on_next_level_ready")
 	next_level_scene.connect("game_loaded", self, "_on_level_loaded")
 	game_scene = next_level_scene
 	game_scene.set_owner(self)
+	Globals.current_level = level_index
 
 func _check_item_count():
 	var non_deleted_pickups = []

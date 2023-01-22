@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/Levels/Level00.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Atoms/Spout/Spout.tscn" type="PackedScene" id=2]
@@ -6,54 +6,12 @@
 [ext_resource path="res://Assets/vector/Asset 9.svg" type="Texture" id=4]
 [ext_resource path="res://fonts/PTSans-BoldItalic.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://fonts/Arvo-Italic.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://Scenes/TimeButtons.gd" type="Script" id=7]
 [ext_resource path="res://Platformer/Character/trail.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Platformer/trail_material.tres" type="Material" id=15]
 [ext_resource path="res://Scenes/Level.gd" type="Script" id=17]
 [ext_resource path="res://Scenes/GameCamera.gd" type="Script" id=18]
-[ext_resource path="res://fonts/PTSans-Bold.ttf" type="DynamicFontData" id=19]
 [ext_resource path="res://Scenes/HideShowCurtain.gd" type="Script" id=20]
-
-[sub_resource type="DynamicFont" id=3]
-size = 36
-font_data = ExtResource( 19 )
-
-[sub_resource type="StyleBoxFlat" id=4]
-content_margin_left = 10.0
-content_margin_right = 10.0
-content_margin_top = 10.0
-content_margin_bottom = 10.0
-bg_color = Color( 0.623529, 0.670588, 0.756863, 1 )
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color( 1, 1, 1, 1 )
-corner_radius_top_left = 40
-corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
-
-[sub_resource type="StyleBoxFlat" id=1]
-content_margin_left = 10.0
-content_margin_right = 10.0
-content_margin_top = 10.0
-content_margin_bottom = 10.0
-bg_color = Color( 0.87451, 0.913725, 0.960784, 1 )
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color( 0, 0, 0, 1 )
-corner_radius_top_left = 40
-corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
-
-[sub_resource type="Theme" id=2]
-Button/colors/font_color = Color( 0, 0, 0, 1 )
-Button/fonts/font = SubResource( 3 )
-Button/styles/hover = SubResource( 4 )
-Button/styles/normal = SubResource( 1 )
 
 [sub_resource type="DynamicFont" id=5]
 size = 180
@@ -117,39 +75,13 @@ custom_constants/margin_top = 30
 custom_constants/margin_left = 30
 custom_constants/margin_bottom = 30
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MenuButtons"]
+[node name="TimeButtons" type="VBoxContainer" parent="MenuButtons"]
 margin_left = 30.0
 margin_top = 30.0
 margin_right = 386.0
 margin_bottom = 834.0
 custom_constants/separation = 10
-
-[node name="Button" type="Button" parent="MenuButtons/VBoxContainer"]
-margin_right = 356.0
-margin_bottom = 67.0
-theme = SubResource( 2 )
-text = "PAUSE"
-
-[node name="Button2" type="Button" parent="MenuButtons/VBoxContainer"]
-margin_top = 77.0
-margin_right = 356.0
-margin_bottom = 144.0
-theme = SubResource( 2 )
-text = "LEVELS"
-
-[node name="Button3" type="Button" parent="MenuButtons/VBoxContainer"]
-margin_top = 154.0
-margin_right = 356.0
-margin_bottom = 221.0
-theme = SubResource( 2 )
-text = "HIGH SCORES"
-
-[node name="Button4" type="Button" parent="MenuButtons/VBoxContainer"]
-margin_top = 231.0
-margin_right = 356.0
-margin_bottom = 298.0
-theme = SubResource( 2 )
-text = "STATS"
+script = ExtResource( 7 )
 
 [node name="HideShowCurtain" type="Control" parent="."]
 margin_left = 400.0

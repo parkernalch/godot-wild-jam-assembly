@@ -45,56 +45,49 @@ color = Color( 1, 0.054902, 0.654902, 0.407843 )
 
 [node name="Platforms" type="Node2D" parent="."]
 
+[node name="CustomPlatform6" parent="Platforms" instance=ExtResource( 5 )]
+position = Vector2( -32, 320 )
+temperature = 0.5
+size = Vector2( 1408, 32 )
+color = Color( 0.168627, 0.0313726, 0.117647, 1 )
+
 [node name="CustomPlatform7" parent="Platforms" instance=ExtResource( 5 )]
-position = Vector2( -608, -80 )
-temperature = 1.0
-size = Vector2( 224, 32 )
+position = Vector2( 0, -32 )
+size = Vector2( 32, 608 )
 color = Color( 0.168627, 0.0313726, 0.117647, 1 )
 
 [node name="CustomPlatform8" parent="Platforms" instance=ExtResource( 5 )]
-position = Vector2( 0, -80 )
-temperature = 1.0
-size = Vector2( 224, 32 )
-color = Color( 0.168627, 0.0313726, 0.117647, 1 )
-
-[node name="CustomPlatform10" parent="Platforms" instance=ExtResource( 5 )]
-position = Vector2( -224, 192 )
-temperature = -0.3
-size = Vector2( 160, 32 )
-color = Color( 0.168627, 0.0313726, 0.117647, 1 )
-
-[node name="CustomPlatform11" parent="Platforms" instance=ExtResource( 5 )]
-position = Vector2( -416, 64 )
-temperature = -0.3
-size = Vector2( 160, 32 )
+position = Vector2( -343, -86 )
+temperature = 0.5
+size = Vector2( 300, 32 )
 color = Color( 0.168627, 0.0313726, 0.117647, 1 )
 
 [node name="CustomPlatform9" parent="Platforms" instance=ExtResource( 5 )]
-position = Vector2( 544, -80 )
-temperature = 1.0
-size = Vector2( 224, 32 )
+position = Vector2( 282, -86 )
+temperature = 0.5
+size = Vector2( 300, 32 )
 color = Color( 0.168627, 0.0313726, 0.117647, 1 )
 
 [node name="Interactables" type="Node2D" parent="."]
 
 [node name="FinishPipe" parent="Interactables" instance=ExtResource( 7 )]
-position = Vector2( 0, 336 )
+position = Vector2( 576, 336 )
 
 [node name="Pickups" type="Node2D" parent="Interactables"]
 position = Vector2( 0.5, 0.5 )
 
 [node name="SodaPickup" parent="Interactables/Pickups" instance=ExtResource( 4 )]
-position = Vector2( -304.5, -224.5 )
+position = Vector2( -432.5, 255.5 )
 pickup_sprite = ExtResource( 11 )
 pickup_type = "soda"
 
 [node name="IcePickup" parent="Interactables/Pickups" instance=ExtResource( 4 )]
-position = Vector2( 207.5, 63.5 )
+position = Vector2( 194.5, -153.5 )
 pickup_sprite = ExtResource( 9 )
 pickup_type = "ice"
 
 [node name="IcePickup2" parent="Interactables/Pickups" instance=ExtResource( 4 )]
-position = Vector2( 293.5, -224.5 )
+position = Vector2( -269.5, -153.5 )
 pickup_sprite = ExtResource( 9 )
 pickup_type = "ice"
 

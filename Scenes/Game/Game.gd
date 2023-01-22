@@ -15,8 +15,14 @@ func _ready():
 	pass
 
 func _on_check_item_count():
-	if pickups.size() == 0:
+	print(pickups)
+	var valid_pickups = []
+	for pickup in pickups:
+		if is_instance_valid(pickup):
+			valid_pickups.append(pickup)
+	if valid_pickups.size() == 0:
 		EventBus.emit_signal("ready_to_proceed")
+	
 
 func _on_pickup_picked_up(type):
 	for pickup_instance in pickups:

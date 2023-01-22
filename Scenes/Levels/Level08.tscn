@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/Game/Game.gd" type="Script" id=1]
 [ext_resource path="res://Platformer/Character/PlaformerCharacter.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Assets/vector/Asset 11.svg" type="Texture" id=9]
 [ext_resource path="res://Assets/px.jpg" type="Texture" id=10]
 [ext_resource path="res://Assets/vector/Asset 3.svg" type="Texture" id=11]
+[ext_resource path="res://Assets/vector/Asset 5.svg" type="Texture" id=12]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
@@ -25,6 +26,7 @@ texture = ExtResource( 10 )
 
 [node name="CustomPlatform2" parent="Walls" instance=ExtResource( 5 )]
 position = Vector2( -32, 352 )
+temperature = 0.5
 size = Vector2( 1440, 32 )
 color = Color( 1, 0.054902, 0.654902, 0.407843 )
 
@@ -45,34 +47,27 @@ color = Color( 1, 0.054902, 0.654902, 0.407843 )
 
 [node name="Platforms" type="Node2D" parent="."]
 
+[node name="CustomPlatform4" parent="Platforms" instance=ExtResource( 5 )]
+position = Vector2( -496, 160 )
+temperature = 0.3
+size = Vector2( 288, 32 )
+color = Color( 0.168627, 0.0313726, 0.117647, 1 )
+
+[node name="CustomPlatform5" parent="Platforms" instance=ExtResource( 5 )]
+position = Vector2( 443, 160 )
+temperature = -0.5
+size = Vector2( 288, 32 )
+color = Color( 0.168627, 0.0313726, 0.117647, 1 )
+
+[node name="CustomPlatform6" parent="Platforms" instance=ExtResource( 5 )]
+temperature = 1.0
+size = Vector2( 288, 32 )
+color = Color( 0.168627, 0.0313726, 0.117647, 1 )
+
 [node name="CustomPlatform7" parent="Platforms" instance=ExtResource( 5 )]
-position = Vector2( -608, -80 )
-temperature = 1.0
-size = Vector2( 224, 32 )
-color = Color( 0.168627, 0.0313726, 0.117647, 1 )
-
-[node name="CustomPlatform8" parent="Platforms" instance=ExtResource( 5 )]
-position = Vector2( 0, -80 )
-temperature = 1.0
-size = Vector2( 224, 32 )
-color = Color( 0.168627, 0.0313726, 0.117647, 1 )
-
-[node name="CustomPlatform10" parent="Platforms" instance=ExtResource( 5 )]
-position = Vector2( -224, 192 )
-temperature = -0.3
-size = Vector2( 160, 32 )
-color = Color( 0.168627, 0.0313726, 0.117647, 1 )
-
-[node name="CustomPlatform11" parent="Platforms" instance=ExtResource( 5 )]
-position = Vector2( -416, 64 )
-temperature = -0.3
-size = Vector2( 160, 32 )
-color = Color( 0.168627, 0.0313726, 0.117647, 1 )
-
-[node name="CustomPlatform9" parent="Platforms" instance=ExtResource( 5 )]
-position = Vector2( 544, -80 )
-temperature = 1.0
-size = Vector2( 224, 32 )
+position = Vector2( -6, 160 )
+temperature = -0.2
+size = Vector2( 288, 32 )
 color = Color( 0.168627, 0.0313726, 0.117647, 1 )
 
 [node name="Interactables" type="Node2D" parent="."]
@@ -84,17 +79,22 @@ position = Vector2( 0, 336 )
 position = Vector2( 0.5, 0.5 )
 
 [node name="SodaPickup" parent="Interactables/Pickups" instance=ExtResource( 4 )]
-position = Vector2( -304.5, -224.5 )
+position = Vector2( -464.5, 31.5 )
 pickup_sprite = ExtResource( 11 )
 pickup_type = "soda"
 
 [node name="IcePickup" parent="Interactables/Pickups" instance=ExtResource( 4 )]
-position = Vector2( 207.5, 63.5 )
+position = Vector2( 399.5, 31.5 )
 pickup_sprite = ExtResource( 9 )
 pickup_type = "ice"
 
+[node name="MilkPickup" parent="Interactables/Pickups" instance=ExtResource( 4 )]
+position = Vector2( -0.5, -128.5 )
+pickup_sprite = ExtResource( 12 )
+pickup_type = "milk"
+
 [node name="IcePickup2" parent="Interactables/Pickups" instance=ExtResource( 4 )]
-position = Vector2( 293.5, -224.5 )
+position = Vector2( 0.5, 83.5 )
 pickup_sprite = ExtResource( 9 )
 pickup_type = "ice"
 
@@ -122,4 +122,5 @@ texture = ExtResource( 8 )
 
 [connection signal="picked_up" from="Interactables/Pickups/SodaPickup" to="OrderDisplay" method="_on_pickup"]
 [connection signal="picked_up" from="Interactables/Pickups/IcePickup" to="OrderDisplay" method="_on_pickup"]
+[connection signal="picked_up" from="Interactables/Pickups/MilkPickup" to="OrderDisplay" method="_on_pickup"]
 [connection signal="picked_up" from="Interactables/Pickups/IcePickup2" to="OrderDisplay" method="_on_pickup"]

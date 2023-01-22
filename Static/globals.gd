@@ -12,6 +12,9 @@ var levels = [
 	preload("res://Scenes/Levels/Level05.tscn"),
 	preload("res://Scenes/Levels/Level06.tscn"),
 	preload("res://Scenes/Levels/Level07.tscn"),
+	preload("res://Scenes/Levels/Level08.tscn"),
+	preload("res://Scenes/Levels/Level09.tscn"),
+	preload("res://Scenes/Levels/Level10.tscn")
 ]
 
 var level_data = {
@@ -56,6 +59,21 @@ var level_data = {
 			"last_time": 0,
 			"name": "Level 7"
 		},
+		{
+			"best_time": 9999,
+			"last_time": 0,
+			"name": "Level 8"
+		},
+		{
+			"best_time": 9999,
+			"last_time": 0,
+			"name": "Level 9"
+		},
+		{
+			"best_time": 9999,
+			"last_time": 0,
+			"name": "Level 10"
+		}
 	]
 }
 
@@ -105,6 +123,7 @@ func get_levels():
 	
 func next_level():
 	current_level += 1
+	print(current_level)
 	if current_level >= levels.size() - 1:
 		return
 	get_tree().change_scene(levels[current_level])

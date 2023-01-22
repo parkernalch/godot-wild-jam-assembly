@@ -32,3 +32,5 @@ func _on_pickup(type):
 		if item.texture == sprite_lookup[type]:
 			item.queue_free()
 			return
+
+

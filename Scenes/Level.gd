@@ -22,6 +22,7 @@ func _on_next_level_ready():
 	level_index += 1
 	if level_index >= levels.size():
 		level_index = 0
+	print(level_index)
 	var next_level_scene = levels[level_index].instance()
 	game_scene.disconnect("game_loaded", self, "_on_level_loaded")
 	game_scene.queue_free()

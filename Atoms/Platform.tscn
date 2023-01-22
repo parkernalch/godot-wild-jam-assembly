@@ -62,4 +62,4 @@ custom_styles/panel = SubResource( 48 )
 
 [node name="TempSprite" parent="." instance=ExtResource( 3 )]
 material = SubResource( 14 )
-scale = Vector2( 0.5, 1 )
+position = Vector2( 0, -256 )

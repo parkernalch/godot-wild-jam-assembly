@@ -272,6 +272,14 @@ func apply_heat_differential(delta):
 		pass
 	health = clamp(health - effective_temp, 0, 100)
 	health_material.set_shader_param("health",health/max_health);
+	$CollisionShape2D.position = Vector2(
+		0,
+		lerp(8, 0, health / max_health)
+	)
+	$CollisionShape2D.shape.set_extents(Vector2(
+		8,
+		health / max_health * 8
+	))
 	if temp_speed_modifier != effective_temp + 1:
 		temp_speed_modifier = max(effective_temp + 1, 0.15)
 #		recalculateAccelerationFromHealth(temp_speed_modifier)

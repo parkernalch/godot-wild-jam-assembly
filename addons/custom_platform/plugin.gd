@@ -87,15 +87,21 @@ func drag_to(event_position: Vector2) -> void:
 	var viewport_position: Vector2 = viewport_transform_inv.xform(event_position)
 	var transform_inv := rect_extents.get_global_transform().affine_inverse()
 	var target_position: Vector2 = transform_inv.xform(viewport_position.round())
+	var clamped_position: Vector2 = (target_position / 16).floor() * 16
 	# Update the rectangle's size. Only resizes uniformly around the center for now
-	var target_size = (target_position - rect_extents.offset).abs() * 2.0
+#	var target_size = (target_position - rect_extents.offset).abs() * 2.0
+	var target_size = (clamped_position - rect_extents.offset).abs() * 2.0
 	rect_extents.size = target_size
-
 
 func forward_canvas_gui_input(event: InputEvent) -> bool:
 	if not rect_extents or not rect_extents.visible:
 		return false
-
+		
+	if not (event is InputEventMouseButton or event is InputEventMouseMotion):
+		return false
+	
+	var event_position = event.position
+	
 	# Clicking and releasing the click
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
 		if not dragged_anchor and event.is_pressed():
@@ -110,7 +116,7 @@ func forward_canvas_gui_input(event: InputEvent) -> bool:
 				}
 				return true
 		elif dragged_anchor and not event.is_pressed():
-			drag_to(event.position)
+			drag_to(event_position)
 			dragged_anchor = {}
 			var undo := get_undo_redo()
 			undo.create_action("Move anchor")
@@ -127,7 +133,7 @@ func forward_canvas_gui_input(event: InputEvent) -> bool:
 		return false
 	# Dragging
 	if event is InputEventMouseMotion:
-		drag_to(event.position)
+		drag_to(event_position)
 		update_overlays()
 		return true
 	# Cancelling with ui_cancel

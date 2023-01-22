@@ -49,6 +49,7 @@ func set_collider_dimensions(rect_size, offset):
 	collider.shape.set_extents(rect_size * 0.5)
 	
 	$TempSprite.position = Vector2(0, -$TempSprite.texture.height / 2 - rect_size.y / 2)
+	var texture_width = $TempSprite.texture.width
 	# TODO: need to adjust size of tempsprite based on rect_size.x
 	pass
 	

@@ -47,7 +47,7 @@ position = Vector2( 1168.5, 427.5 )
 
 [node name="Background" type="Sprite" parent="Foreground/Game"]
 self_modulate = Color( 0.87451, 0.913725, 0.960784, 1 )
-position = Vector2( -16.5, -11.5 )
+position = Vector2( -26.5, -10.5 )
 scale = Vector2( 1417, 712 )
 texture = ExtResource( 3 )
 
@@ -75,24 +75,20 @@ color = Color( 1, 0.054902, 0.654902, 0.407843 )
 
 [node name="Platforms" type="Node2D" parent="Foreground/Game"]
 
+[node name="CustomPlatform" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
+position = Vector2( -571.5, 188.5 )
+temperature = -0.3
+size = Vector2( 268, 39 )
+
 [node name="CustomPlatform2" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
-position = Vector2( -608.5, 59.5 )
-size = Vector2( 288, 32 )
+position = Vector2( -49.5, 0.5 )
+temperature = 0.8
+size = Vector2( 268, 39 )
 
 [node name="CustomPlatform3" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
-position = Vector2( -288.5, 132.5 )
-temperature = 1.0
-size = Vector2( 288, 32 )
-
-[node name="CustomPlatform4" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
-position = Vector2( 47.5, 116.5 )
-size = Vector2( 288, 32 )
-color = Color( 0.168627, 0.0313726, 0.117647, 1 )
-
-[node name="CustomPlatform5" parent="Foreground/Game/Platforms" instance=ExtResource( 5 )]
-position = Vector2( 441.5, 43.5 )
-size = Vector2( 288, 32 )
-color = Color( 0.168627, 0.0313726, 0.117647, 1 )
+position = Vector2( 372.5, 188.5 )
+temperature = 0.5
+size = Vector2( 268, 39 )
 
 [node name="Interactables" type="Node2D" parent="Foreground/Game"]
 
@@ -103,22 +99,22 @@ position = Vector2( 82.5, 334.5 )
 position = Vector2( 0.5, 0.5 )
 
 [node name="SodaPickup" parent="Foreground/Game/Interactables/Pickups" instance=ExtResource( 7 )]
-position = Vector2( -506, -122 )
+position = Vector2( -314, -177 )
 pickup_sprite = ExtResource( 8 )
 pickup_type = "soda"
 
 [node name="CoffeePickup" parent="Foreground/Game/Interactables/Pickups" instance=ExtResource( 7 )]
-position = Vector2( 587.5, -171.5 )
+position = Vector2( 231, -177 )
 pickup_sprite = ExtResource( 10 )
 pickup_type = "coffee"
 
 [node name="IcePickup" parent="Foreground/Game/Interactables/Pickups" instance=ExtResource( 7 )]
-position = Vector2( 278.5, -152.5 )
+position = Vector2( 340, 122 )
 pickup_sprite = ExtResource( 9 )
 pickup_type = "ice"
 
 [node name="MilkPickup" parent="Foreground/Game/Interactables/Pickups" instance=ExtResource( 7 )]
-position = Vector2( -227, -122 )
+position = Vector2( -326, 156 )
 pickup_sprite = ExtResource( 11 )
 pickup_type = "milk"
 

@@ -2,9 +2,9 @@ extends Node2D
 
 onready var pickups = get_node("Foreground/Game/Interactables/Pickups").get_children()
 
-
-func next_level():
-	print("next level")
+func _ready():
+	Globals.get_levels()
+	print(Globals.levels)
 
 func _check_item_count():
 	var non_deleted_pickups = []
@@ -12,4 +12,5 @@ func _check_item_count():
 		if is_instance_valid(pickup):
 			non_deleted_pickups.push_front(pickup)
 	if non_deleted_pickups.size() == 0:
-		next_level()
+		Globals.next_level()
+

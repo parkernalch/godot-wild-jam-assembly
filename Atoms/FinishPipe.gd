@@ -18,8 +18,8 @@ func play_particles():
 func _on_player_entered(body):
 	if not body is Player:
 		return
+	emit_signal("check_item_count")
 	pass
 
 func _on_pickup_entered(_type):
 	play_particles()
-	emit_signal("check_item_count")
